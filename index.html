@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+        integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.3/gsap.min.js" integrity="sha512-7Au1ULjlT8PP1Ygs6mDZh9NuQD0A5prSrAUiPHMXpU6g3UMd8qesVnhug5X4RoDr35x5upNpx0A6Sisz1LSTXA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+        <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <div class="container">
+        <nav>
+            <div class="logo">
+                <h1>Care's</h1>
+            </div>
+            <ul>
+                <li><a href="">Home</a></li>
+                <li><a href="#speciality">Speciality</a></li>
+                <li><a href="#doctor">Doctor's</a></li>
+                <li><a href="#review">Review's</a></li>
+            </ul>
+            <i id="icon" class="fa-solid fa-moon"></i>
+        </nav>
+
+        <div class="main">
+            <div class="mainText">
+                <h1>Care Patient At <br>
+                    Life Care</h1>
+                <p>Lorem ipsum, dolor sit amet consectetur adipisicing <br> 
+                    elit. Sit possimus nemo pariatur eos facere <br>
+                    similique consequatur, vel, deleniti, rem </p>
+                <button>Visit</button>
+            </div>
+            <img src="doctor.jpg" alt="">
+        </div>
+
+        <div id="speciality">
+            <div class="head">
+                <h1>Our Speciality</h1>
+            </div>
+            <div class="special">
+                <div class="card">
+                    <img src="heart.jpg" alt="">
+                    <h2>Heart Surgery</h2>
+                </div>
+                <div class="card">
+                    <img src="robotic.png" alt="">
+                    <h2>Robotic Surgery</h2>
+                </div>
+                <div class="card">
+                    <img src="leg.png" alt="">
+            
+                    <h2>Leg Surgery</h2>
+                </div>
+            </div>
+        </div>
+        <div id="doctor">
+            <div class="head">
+                <h1>Our Doctor's</h1>
+            </div>
+            <div class="doctor">
+                <div class="docCard">
+                    <img src="doctor.jpg" alt="">
+                    <p>Alexa Zoan</p>
+                </div>
+
+
+                <div class="docCard">
+                    <img src="doctor-3.jpg" alt="">
+                    <p>Alexa Zoan</p>
+                </div>
+
+
+                <div class="docCard">
+                    <img src="doctor-2.jpg" alt="">
+                    <p>Alexa Zoan</p>
+                </div>
+            </div>
+        </div>
+
+        <div id="review">
+            <div class="head">
+                <h1>Patient Review's</h1>
+            </div>
+            <div class="review">
+                <div class="reviewCard">
+                    <img src="patent-2.jfif" alt="">
+                    <img src="patent-3.jfif" alt="">
+                    <img src="patent-4.jfif" alt="">
+                </div>
+
+                <div class="reviewCard">
+                    <img src="patent-6.jfif" alt="">
+                    <img src="patent-5.jfif" alt="">
+                    <img src="patent-7.jfif" alt="">
+                </div>
+
+                <div class="reviewCard">
+                    <img src="patent-8.jfif" alt="">
+                    <img src="patent-9.jfif" alt="">
+                    <img src="patent-2.jfif" alt="">
+                </div>
+            </div>
+        </div>
+        <div class="footer">
+            <div class="text">
+                <h2>About Us</h2>
+                <p>GoodCare</p>
+                <p>Best</p>
+                <p>Affordable</p>
+                <p>Nice</p>
+            </div>
+
+            <div class="text">
+                <h2>About Us</h2>
+                <p>GoodCare</p>
+                <p>Best</p>
+                <p>Offers</p>
+                <p>Affordable</p>
+            </div>
+
+            <div class="text">
+                <h2>About Us</h2>
+                <p>GoodCare</p>
+                <p>Best</p>
+                <p>Service</p>
+                <p>Affordable</p>
+            </div>
+
+            <div class="text">
+                <h2>About Us</h2>
+                <p>GoodCare</p>
+                <p>Best</p>
+                <p>Product</p>
+                <p>Affordable</p>
+            </div>
+
+
+        </div>
+    </div>
+    <script>
+        let card = document.querySelectorAll(".reviewCard");
+        let icon = document.getElementById("icon");
+        let count = 0;
+        let surgery = document.querySelectorAll(".card");
+
+        card.forEach(function (cards, index) {
+            cards.style.left = `${index * 100}%`
+        })
+
+        function myFun() {
+            card.forEach(function (carVal) {
+                carVal.style.transform = `translateX(-${count * 100}%)`
+            })
+        }
+
+        setInterval(function () {
+            count++;
+            if (card.length == count) {
+                count = 0;
+            }
+            myFun()
+        }, 2000)
+
+        icon.addEventListener("click", function(){
+            document.querySelector("body").classList.toggle("mode");
+            if(icon.className == "fa-solid fa-moon"){
+                icon.className="fa-solid fa-sun"
+            }
+            else{
+                icon.className="fa-solid fa-moon"
+            }
+        })
+
+        surgery.forEach(function(curCard){
+            curCard.addEventListener("click",function(){
+                console.log(curCard);
+
+                let div = document.createElement("div");
+                div.classList.add("detailCard");
+                div.innerHTML=`
+                <i id = "cross" class="fa-solid fa-circle-xmark"></i>
+                <img src=${curCard.firstElementChild.src} alt="">
+                <h1>${curCard.lastElementChild.innerHTML}</h1>
+                <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Dolore nobis, totam illo dolorum similique nemo error ab? Praesentium nisi cumque rem eos.</p>`
+
+                document.querySelector("body").appendChild(div);
+
+                document.getElementById("cross").addEventListener('click', function(){
+                    div.remove()
+                })
+            })
+        })
+    </script>
+</body>
+
+</html>
