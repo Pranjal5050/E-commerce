@@ -6,7 +6,7 @@ const mongoose = require("mongoose");
 
 module.exports.userRegister = async (req, res) => {
     const errors = validationResult(req);
-    if (!errors.isEmpty) {
+    if (!errors.isEmpty()) {
         return res.status(401).json({ errors: errors.array() });
     }
     try {
