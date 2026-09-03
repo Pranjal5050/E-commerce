@@ -17,7 +17,7 @@ const WomenCategory = () => {
                 return;
             }
 
-            const res = await axios.post("http://localhost:5000/cart", { productId, quantity }
+            const res = await axios.post(`${import.meta.env.VITE_API_ENDPOINT}/cart`, { productId, quantity }
                 , {
                     headers: {
                         Authorization: `Bearer ${token}`
@@ -33,7 +33,7 @@ const WomenCategory = () => {
     useEffect(() => {
 
         async function AllProducts() {
-            const res = await axios.get("http://localhost:5000/admin/getProducts");
+            const res = await axios.get(`${import.meta.env.VITE_API_ENDPOINT}/admin/getProducts`);
 
             const products = res.data.products.filter((prod) => {
                 return prod.category.toLowerCase() === "women";

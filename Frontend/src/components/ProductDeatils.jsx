@@ -12,7 +12,7 @@ const ProductDeatils = () => {
 
 
   useEffect(() => {
-    fetch(`http://localhost:5000/admin/getProductById/${id}`)
+    fetch(`${import.meta.env.VITE_API_ENDPOINT}/admin/getProductById/${id}`)
       .then((res) => res.json())
       .then((data) => {
         setProduct(data);

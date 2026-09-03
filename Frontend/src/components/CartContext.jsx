@@ -29,7 +29,7 @@ export const CartProvider = ({ children }) => {
             }
 
             const res = await axios.get(
-                "http://localhost:5000/cart/getCartProduct",
+                `${import.meta.env.VITE_API_ENDPOINT}/cart/getCartProduct`,
                 {
                     headers: {
                         Authorization: `Bearer ${token}`

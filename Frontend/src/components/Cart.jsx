@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import Navbar from "./Navbar";
-import { jwtDecode } from "jwt-decode";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import axios from "axios";
 import {
   Search,
@@ -22,8 +21,6 @@ import {
 } from "lucide-react";
 import { RiArrowLeftLine } from "@remixicon/react";
 
-
-
 const Cart = () => {
 
   const [product, setProduct] = useState([]);
@@ -35,12 +32,11 @@ const Cart = () => {
 
       if (!token) return;
 
-      const res = await axios.get("http://localhost:5000/cart/getCartProduct", {
+      const res = await axios.get(`${import.meta.env.VITE_API_ENDPOINT}/cart/getCartProduct`, {
         headers: {
           Authorization: `Bearer ${token}`
         }
       });
-
       setProduct(res.data.cartProduct);
     }
     fetchProduct();
@@ -51,7 +47,7 @@ const Cart = () => {
       <div className="login-prompt w-full h-screen flex items-center justify-center">
         <div className="text-center">
           <Link to={'/'} className="absolute top-10 left-10">
-            <button className="flex items-center justify-center text-md text-green-900 gap-2 border px-4 font-semibold py-1 rounded-full"><RiArrowLeftLine className="text-green-900" size={20}/>Back</button>
+            <button className="flex items-center justify-center text-md text-green-900 gap-2 border px-4 font-semibold py-1 rounded-full"><RiArrowLeftLine className="text-green-900" size={20} />Back</button>
           </Link>
           <h1 className="text-2xl font-semibold">Please login first.</h1>
           <Link to={'/login'} className="block mt-3 px-8 py-2 text-white bg-green-900 rounded border-none">Login</Link>
@@ -65,7 +61,6 @@ const Cart = () => {
     <div className="min-h-screen bg-white text-[#151515]">
 
       <Navbar />
-
 
       {/* MAIN */}
       <main className="px-4 sm:px-6 lg:px-9 pt-5 pb-10">

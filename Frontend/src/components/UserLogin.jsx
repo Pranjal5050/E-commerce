@@ -21,7 +21,7 @@ const UserLogin = () => {
     }
 
     try {
-      const res = await axios.post("http://localhost:5000/user/login", user);
+      const res = await axios.post(`${import.meta.env.VITE_API_ENDPOINT}/user/login`, user);
       
       const token = res.data.token;
       

@@ -11,7 +11,7 @@ const MenCategory = () => {
     async function getProduct() {
 
       try {
-        const res = await axios.get("http://localhost:5000/admin/getProducts");
+        const res = await axios.get(`${import.meta.env.VITE_API_ENDPOINT}/admin/getProducts`);
 
         const menProducts = res.data.products.filter((product) => {
           return product.category.toLowerCase() === 'men';

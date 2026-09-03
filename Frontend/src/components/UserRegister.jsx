@@ -26,7 +26,7 @@ const UserRegister = () => {
     }
 
     try {
-      const res = await axios.post("http://localhost:5000/user/register", user);
+      const res = await axios.post(`${import.meta.env.VITE_API_ENDPOINT}/user/register`, user);
       const token = res.data.token;
       localStorage.setItem("token", token);
       navigate('/');

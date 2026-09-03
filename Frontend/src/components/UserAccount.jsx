@@ -18,7 +18,7 @@ const UserAccount = () => {
             const decoded = jwtDecode(token);
             const userId = decoded.id || decoded._id;
 
-            const res = await axios.get(`http://localhost:5000/user/profile/${userId}`, {
+            const res = await axios.get(`${import.meta.env.VITE_API_ENDPOINT}/user/profile/${userId}`, {
                 withCredentials: true
             });
             setUser(res.data.user);

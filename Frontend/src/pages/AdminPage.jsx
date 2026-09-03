@@ -31,7 +31,7 @@ const AdminPage = () => {
        formData.append("category", category);
        formData.append("image", image);
 
-        const res = await axios.post("http://localhost:5000/admin/createProduct", formData, {
+        const res = await axios.post(`${import.meta.env.VITE_API_ENDPOINT}/admin/createProduct`, formData, {
            headers:{
             Authorization : `Bearer ${token}`
            }
