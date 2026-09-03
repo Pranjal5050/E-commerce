@@ -3,7 +3,9 @@ const app = express();
 require('dotenv').config();
 const cors = require("cors");
 app.use(cors({
-    origin: 'http://localhost:5173',
+    origin: ['http://localhost:5173',
+        "https://we-mart.netlify.app"
+    ],
     credentials: true
 }));
 const db = require("./db/db");
