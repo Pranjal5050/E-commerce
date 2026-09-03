@@ -107,24 +107,24 @@ const UserRegister = () => {
 
                 <div className='md:w-1/2'>
                   <label className='hidden md:block text-md text-gray-700'>Firstname</label> <br />
-                  <input type="text" value={firstname} onChange={(e) => { setFirstname(e.target.value) }} name='firstname' className='w-full py-2 p-2 text-sm rounded mt-2 outline-none border border-gray-500' placeholder='Enter your firstname' />
+                  <input type="text" value={firstname} onChange={(e) => { setFirstname(e.target.value) }} name='firstname' className='w-full py-2 p-2 text-sm rounded sm:mt-2 outline-none border border-gray-500' placeholder='Enter your firstname' />
                 </div>
 
                 <div className='md:w-1/2'>
                   <label className='hidden md:block text-md text-gray-700'>Lastname</label> <br />
-                  <input type="text" value={lastname} onChange={(e) => { setLastname(e.target.value) }} name='lastname' className='w-full py-2 p-2 rounded mt-2 outline-none border border-gray-500' placeholder='Enter your firstname' />
+                  <input type="text" value={lastname} onChange={(e) => { setLastname(e.target.value) }} name='lastname' className='w-full py-2 p-2 rounded sm:mt-2 outline-none border border-gray-500' placeholder='Enter your lastname' />
                 </div>
               </div>
 
               <div className='md:flex w-full gap-5'>
                 <div className='md:w-1/2'>
                   <label className='hidden md:block text-md text-gray-700'>Email</label> <br />
-                  <input type="email" value={email} onChange={(e) => { setEmail(e.target.value) }} name='email' className='w-full py-2 p-2 rounded outline-none border border-gray-500' placeholder='Enter your firstname' />
+                  <input type="email" value={email} onChange={(e) => { setEmail(e.target.value) }} name='email' className='w-full py-2 p-2 rounded outline-none border border-gray-500' placeholder='Enter your Email' />
                 </div>
 
                 <div className='md:w-1/2'>
                   <label className='hidden md:block text-md text-gray-700'>Password</label> <br />
-                  <input type="password" value={password} onChange={(e) => { setPassword(e.target.value) }} name='password' className='w-full py-2 p-2 rounded mt-2 outline-none border border-gray-500' placeholder='Enter your firstname' />
+                  <input type="password" value={password} onChange={(e) => { setPassword(e.target.value) }} name='password' className='w-full py-2 p-2 rounded sm:mt-2 outline-none border border-gray-500' placeholder='Enter your Password' />
                 </div>
               </div>
               <button className='w-full cursor-pointer hover:bg-green-800 mt-6 bg-green-700 font-semibold text-sm text-white flex items-center justify-center gap-2 py-2 rounded-sm'>Create Account <RiArrowRightLine /></button>
