@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
-import { jwtDecode } from 'jwt-decode'
+import { ToastContainer, toast } from 'react-toastify';
 
 const AdminPage = () => {
     const navigate = useNavigate();
@@ -23,23 +23,34 @@ const AdminPage = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
 
-       const formData = new FormData();
+        const formData = new FormData();
 
-       formData.append("title", title);
-       formData.append("description", description);
-       formData.append("price", price);
-       formData.append("category", category);
-       formData.append("image", image);
+        formData.append("title", title);
+        formData.append("description", description);
+        formData.append("price", price);
+        formData.append("category", category);
+        formData.append("image", image);
 
         const res = await axios.post(`${import.meta.env.VITE_API_ENDPOINT}/admin/createProduct`, formData, {
-           headers:{
-            Authorization : `Bearer ${token}`
-           }
+            headers: {
+                Authorization: `Bearer ${token}`
+            }
         });
+        if (res.data.success) {
+            toast.success("Product created successfully!");
+            setTitle("");
+            setDescription("");
+            setPrice("");
+            setCategory("");
+            setImage(null);
+        } else {
+            toast.error("Failed to create product.");
+        }
     }
 
     return (
         <div className='w-full h-screen bg-[#ffff] p-10'>
+            <ToastContainer />
             <h1 className='text-2xl font-semibold text-green-800'>Add New Product</h1>
             <form onSubmit={handleSubmit}>
                 <div className='w-full mt-5 p-5 shadow-2xl md:flex gap-10 rounded-sm'>

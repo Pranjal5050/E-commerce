@@ -45,45 +45,129 @@ const WomenCategory = () => {
     }, []);
 
     return (
-        <div className='w-full bg-[#ffffff75]'>
-            <Navbar />
-            <div className='p-5'>
-                <ToastContainer/>
-                <h1 className='text-2xl md:text-2xl font-bold text-green-900'>Women</h1>
-                <p className='text-gray-500 mt-3'>Discover our best collection for women</p>
-                <div className='w-full grid grid-cols-2 lg:grid-cols-5 gap-3 mt-5 pb-24'>
-                    {product.map((prod) => {
-                        return (
-                            <div key={prod._id} className='md:w-52 md:h-95 w-full min-w-0 h-94 rounded-md overflow-hidden border-1 border-gray-300'>
-                                <div className='w-full h-full'>
-                                    <Link to={`/productDetails/${prod._id}`}>
-                                        <div className='w-full h-[70%] bg-white'>
-                                            <img src={prod.image} className='w-full h-full object-cover object-top' alt="" />
-                                        </div>
-                                    </Link>
+        <div className="w-full min-h-screen bg-[#ffffff75]">
+    <Navbar />
 
-                                    <div className='p-1'>
-                                        <h1 className='text-sm font-semibold'>{prod.title}</h1>
-                                        <p className='text-sm font-bold mt-3 mb-3'>₹{prod.price}</p>
-                                        <button
-                                            onClick={() => { validateUser(prod._id || prod.id) }}
-                                            className='rounded-sm hover:bg-green-900 hover:text-white border-1 
-                                            flex items-center justify-center text-sm cursor-pointer border-green-800 text-green-900 
-                                            w-full py-1'>
-                                            <span>
-                                                <RiShoppingBasketFill />
-                                            </span>
-                                            Add to cart
-                                        </button>
-                                    </div>
+    <div className="px-4 py-5 sm:px-6 md:px-8">
+        <ToastContainer />
 
-                                </div>
+        {/* Heading */}
+        <h1 className="text-2xl sm:text-3xl font-bold text-green-900">
+            Women
+        </h1>
+
+        <p className="text-sm sm:text-base text-gray-500 mt-2 sm:mt-3">
+            Discover our best collection for women
+        </p>
+
+        {/* Products */}
+        <div
+            className="
+                w-full
+                grid
+                grid-cols-2
+                sm:grid-cols-2
+                md:grid-cols-3
+                lg:grid-cols-4
+                xl:grid-cols-5
+                gap-3
+                sm:gap-4
+                md:gap-5
+                mt-5
+                pb-24
+            "
+        >
+            {product.map((prod) => {
+                return (
+                    <div
+                        key={prod._id}
+                        className="
+                            w-full
+                            min-w-0
+                            rounded-md
+                            overflow-hidden
+                            border
+                            border-gray-300
+                            bg-white
+                        "
+                    >
+                        {/* Image */}
+                        <Link to={`/productDetails/${prod._id}`}>
+                            <div className="w-full aspect-[3/4] bg-white overflow-hidden">
+                                <img
+                                    src={prod.image}
+                                    className="w-full h-full object-cover object-top"
+                                    alt={prod.title}
+                                />
                             </div>
-                        )
-                    })}
-                </div>
-            </div>
+                        </Link>
+
+                        {/* Product Details */}
+                        <div className="p-2 sm:p-3">
+
+                            <h1
+                                className="
+                                    text-xs
+                                    sm:text-sm
+                                    md:text-base
+                                    font-semibold
+                                    line-clamp-2
+                                    min-h-[32px]
+                                    sm:min-h-[40px]
+                                "
+                            >
+                                {prod.title}
+                            </h1>
+
+                            <p
+                                className="
+                                    text-sm
+                                    sm:text-base
+                                    font-bold
+                                    mt-2
+                                    mb-2
+                                "
+                            >
+                                ₹{prod.price}
+                            </p>
+
+                            <button
+                                onClick={() => {
+                                    validateUser(prod._id || prod.id)
+                                }}
+                                className="
+                                    rounded-sm
+                                    hover:bg-green-900
+                                    hover:text-white
+                                    border
+                                    flex
+                                    items-center
+                                    justify-center
+                                    gap-1
+                                    text-xs
+                                    sm:text-sm
+                                    cursor-pointer
+                                    border-green-800
+                                    text-green-900
+                                    w-full
+                                    py-2
+                                    transition
+                                "
+                            >
+                                <RiShoppingBasketFill size={16} />
+
+                                <span>
+                                    Add to cart
+                                </span>
+                            </button>
+
+                        </div>
+                    </div>
+                )
+            })}
         </div>
+    </div>
+</div>
     )
 }
 

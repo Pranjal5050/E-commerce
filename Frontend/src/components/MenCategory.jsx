@@ -27,41 +27,119 @@ const MenCategory = () => {
 
 
   return (
-    <div className='w-full'>
-      <Navbar />
-      <div className='p-8'>
-        <h1 className='text-3xl font-semibold font-semiold text-green-800'>Men's</h1>
+<div className="w-full min-h-screen">
+  <Navbar />
 
-        <p className='text-md text-gray-400 mt-4'>Discover our best collection for men</p>
+  <div className="px-4 py-6 sm:px-6 md:px-8 lg:px-10">
+    
+    {/* Heading */}
+    <h1 className="text-2xl sm:text-3xl font-semibold text-green-800">
+      Men's
+    </h1>
 
-        {product.map((item) => (
-          <div key={item._id} className='w-full mt-5'>
-            <div className='w-52 h-90 rounded-md shadow border border-gray-200 overflow-hidden'>
-              <Link to={`/productDetails/${item._id}`}>
-                <div className='w-full h-[70%] bg-green-800'>
-                  <img className='w-full h-full object-cover object-top' src={item.image} alt="" />
-                </div>
-              </Link>
-              <div className='p-1'>
+    <p className="text-sm sm:text-md text-gray-400 mt-2 sm:mt-3">
+      Discover our best collection for men
+    </p>
 
-                <h1 className='text-md mt-2 font-light text-gray-600'>{item.title}</h1>
-                <p className='text-ms font-semibold'>₹ {item.price}</p>
-                <button
-                  className='rounded-sm hover:bg-green-900 hover:text-white border-1 mt-2
-                               flex items-center justify-center text-sm cursor-pointer border-green-800 text-green-900 
-                              px-8 py-1'>
-                  <span>
-                    <RiShoppingBasketFill />
-                  </span>
-                  Add to cart
-                </button>
+    {/* Products */}
+    <div className="
+      grid
+      grid-cols-2
+      sm:grid-cols-2
+      md:grid-cols-3
+      lg:grid-cols-4
+      xl:grid-cols-5
+      gap-4
+      sm:gap-5
+      md:gap-6
+      mt-6
+    ">
 
-              </div>
+      {product.map((item) => (
+        <div
+          key={item._id}
+          className="
+            w-full
+            min-w-0
+            rounded-md
+            shadow
+            border
+            border-gray-200
+            overflow-hidden
+            bg-white
+          "
+        >
+
+          {/* Product Image */}
+          <Link to={`/productDetails/${item._id}`}>
+            <div className="w-full aspect-[3/4] overflow-hidden bg-gray-100">
+              <img
+                className="w-full h-full object-cover object-top"
+                src={item.image}
+                alt={item.title}
+              />
             </div>
+          </Link>
+
+          {/* Product Details */}
+          <div className="p-2 sm:p-3">
+
+            <h2 className="
+              text-xs
+              sm:text-sm
+              md:text-base
+              font-light
+              text-gray-600
+              line-clamp-2
+              min-h-[32px]
+              sm:min-h-[40px]
+            ">
+              {item.title}
+            </h2>
+
+            <p className="
+              text-sm
+              sm:text-base
+              font-semibold
+              mt-1
+            ">
+              ₹ {item.price}
+            </p>
+
+            <button
+              className="
+                w-full
+                rounded-sm
+                hover:bg-green-900
+                hover:text-white
+                border
+                mt-2
+                flex
+                items-center
+                justify-center
+                gap-1
+                text-xs
+                sm:text-sm
+                cursor-pointer
+                border-green-800
+                text-green-900
+                px-2
+                py-2
+                transition
+              "
+            >
+              <RiShoppingBasketFill size={16} />
+              <span>Add to cart</span>
+            </button>
+
           </div>
-        ))}
-      </div>
+
+        </div>
+      ))}
+
     </div>
+  </div>
+</div>
   )
 }
 
