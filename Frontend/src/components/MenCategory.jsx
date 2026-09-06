@@ -48,7 +48,8 @@ const MenCategory = () => {
       sm:grid-cols-2
       md:grid-cols-3
       lg:grid-cols-4
-      xl:grid-cols-5
+      sm:mb-0
+      mb-20
       gap-4
       sm:gap-5
       md:gap-6
@@ -133,10 +134,8 @@ const MenCategory = () => {
             </button>
 
           </div>
-
         </div>
       ))}
-
     </div>
   </div>
 </div>

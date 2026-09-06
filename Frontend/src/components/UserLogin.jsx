@@ -103,12 +103,12 @@ const UserLogin = () => {
               <div className=' w-full gap-5 mt-5'>
                 <div className='full'>
                   <label className='text-md text-gray-700'>Email</label> <br />
-                  <input type="email" value={email} onChange={(e) => { setEmail(e.target.value) }} name='email' className='w-full py-1 p-2 rounded mt-2 outline-none border border-gray-500' placeholder='Enter your firstname' />
+                  <input type="email" value={email} onChange={(e) => { setEmail(e.target.value) }} name='email' className='w-full py-1 p-2 rounded mt-2 outline-none border border-gray-500' placeholder='Enter your Email' />
                 </div>
 
                 <div className='w-full mt-5'>
                   <label className='text-md text-gray-700'>Password</label> <br />
-                  <input type="password" value={password} onChange={(e) => { setPassword(e.target.value) }} name='password' className='w-1/1 py-1 p-2 rounded mt-2 outline-none border border-gray-500' placeholder='Enter your firstname' />
+                  <input type="password" value={password} onChange={(e) => { setPassword(e.target.value) }} name='password' className='w-1/1 py-1 p-2 rounded mt-2 outline-none border border-gray-500' placeholder='Enter your Password' />
                 </div>
               </div>
               <button className='w-full text-md cursor-pointer hover:bg-green-800 mt-6 bg-green-700 font-semibold text-white flex items-center justify-center gap-2 py-2 rounded-sm'>Login <RiArrowRightLine /></button>

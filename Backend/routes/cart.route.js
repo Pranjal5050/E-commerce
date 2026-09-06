@@ -8,4 +8,6 @@ router.post("/", authMiddleware.userMiddleware, cartController.cart);
 
 router.get("/getCartProduct", authMiddleware.userMiddleware, cartController.getCartProduct);
 
+router.delete('/:prodId', authMiddleware.userMiddleware, cartController.deleteItem)
+
 module.exports = router;

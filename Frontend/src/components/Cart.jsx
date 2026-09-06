@@ -20,6 +20,7 @@ import {
   BadgeCheck,
 } from "lucide-react";
 import { RiArrowLeftLine } from "@remixicon/react";
+import { toast, ToastContainer } from "react-toastify";
 
 const Cart = () => {
 
@@ -40,7 +41,54 @@ const Cart = () => {
       setProduct(res.data.cartProduct);
     }
     fetchProduct();
-  }, [token])
+  }, [token]);
+
+  const handlerRemove = async (productId) => {
+    try {
+      const response = await axios.post(`${import.meta.env.VITE_API_ENDPOINT}/cart`, { productId, quantity: -1 }, {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      })
+      if (response.status === 200) {
+        toast.success("Product removed successfully")
+        setProduct((prev) =>
+          prev.map((item) =>
+            item.productId._id === productId ? { ...item, quantity: item.quantity - 1 } : item,
+          )
+        )
+      }
+    } catch (error) {
+      toast.error("Failed to remove product");
+    }
+  }
+
+  const handlerQuantity = async (productId) => {
+    try {
+
+      const res = await axios.post(`${import.meta.env.VITE_API_ENDPOINT}/cart`, {
+        productId: productId,
+        quantity: 1
+      }, {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      })
+
+      if (res.status === 200) {
+        setProduct((prev) =>
+          prev.map((item) =>
+            item.productId._id === productId ? { ...item, quantity: item.quantity + 1 } : item
+          )
+        )
+
+        toast.success("Quantity updated successfully");
+      }
+
+    } catch (err) {
+      toast.error("Failed to update quantity");
+    }
+  };
 
   if (!token) {
     return (
@@ -56,11 +104,27 @@ const Cart = () => {
     )
   }
 
+  const DeleteItem = async (productId)=>{
+    try{
+      const productDelete = await axios.delete(`${import.meta.env.VITE_API_ENDPOINT}/cart/${productId}`, {
+        headers : {
+          Authorization: `Bearer ${token}`
+        }
+      })
+      if(productDelete.status === 200){
+        toast.success("Product deleted successfully");
+      }
+    } catch(err){
+      toast.error("Failed to delete product");
+    }
+  }
+
 
   return (
     <div className="min-h-screen bg-white text-[#151515]">
 
       <Navbar />
+      <ToastContainer />
 
       {/* MAIN */}
       <main className="px-4 sm:px-6 lg:px-9 pt-5 pb-10">
@@ -194,7 +258,9 @@ const Cart = () => {
 
                   <div className="flex items-center w-[120px] h-[38px] border border-gray-200 rounded-lg">
 
-                    <button className="w-9 flex justify-center">
+                    <button onClick={() => {
+                      handlerRemove(item.productId._id)
+                    }} className="w-9 flex justify-center cursor-pointer">
                       <Minus size={13} />
                     </button>
 
@@ -202,7 +268,7 @@ const Cart = () => {
                       {item.quantity}
                     </span>
 
-                    <button className="w-9 flex justify-center">
+                    <button onClick={() => { handlerQuantity(item.productId._id) }} className="w-9 flex justify-center cursor-pointer">
                       <Plus size={13} />
                     </button>
 
@@ -210,7 +276,7 @@ const Cart = () => {
 
                   <div className="flex gap-4 mt-3 text-[10px] sm:text-[11px] text-gray-600">
 
-                    <span className="flex items-center gap-1">
+                    <span onClick={() => DeleteItem(item.productId._id)} className="flex items-center gap-1">
                       <Trash2 size={12} />
                       Remove
                     </span>
@@ -424,7 +490,7 @@ const Cart = () => {
 
 
               {/* FEATURES */}
-              <div className="grid grid-cols-3 gap-2 sm:gap-3 border-t border-gray-200 mt-5 pt-5">
+              <div className="grid grid-cols-3 gap-2 mb-10 sm:mb-0 sm:gap-3 border-t border-gray-200 mt-5 pt-5">
 
                 <div className="text-center">
 
@@ -492,5 +558,4 @@ const Cart = () => {
     </div>
   );
 };
-
 export default Cart;

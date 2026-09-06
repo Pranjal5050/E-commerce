@@ -23,8 +23,6 @@ export const CartProvider = ({ children }) => {
             const token = localStorage.getItem("token");
 
             if (!token) {
-                console.log("No token");
-                console.log("Please Login First")
                 return;
             }
 
