@@ -51,7 +51,6 @@ const Cart = () => {
         }
       })
       if (response.status === 200) {
-        toast.success("Product removed successfully")
         setProduct((prev) =>
           prev.map((item) =>
             item.productId._id === productId ? { ...item, quantity: item.quantity - 1 } : item,
@@ -81,8 +80,6 @@ const Cart = () => {
             item.productId._id === productId ? { ...item, quantity: item.quantity + 1 } : item
           )
         )
-
-        toast.success("Quantity updated successfully");
       }
 
     } catch (err) {

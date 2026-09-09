@@ -28,21 +28,21 @@ const ProductDeatils = () => {
     <div className='w-full h-screen p-2 bg-[#ffff]'>
       <Navbar />
       <div className='w-full h-[80%] md:flex gap-5 mt-5'>
-        <div className='md:w-2/6 md:h-full h-[60vh] w-full rounded-md overflow-hidden'>
+        <div className='md:w-1/2 md:h-full h-[60vh] w-full rounded-md overflow-hidden'>
           <img src={product.image} className='w-full h-full object-cover object-top' alt="" />
         </div>
         <div className='h-full p-2'>
-          <h1 className='text-2xl font-semibold'>{product.title}</h1>
-          <p className='text-lg text-gray-500 mt-2'>{product.description}</p>
+          <h1 className='text-lg font-semibold'>{product.title}</h1>
+          <p className='text-sm text-gray-500 mt-2'>{product.description}</p>
           <div className='flex mt-5'>
             <RiStarFill size={20} className='text-yellow-400' />
             <RiStarFill size={20} className='text-yellow-400' />
             <RiStarFill size={20} className='text-yellow-400' />
             <RiStarFill size={20} className='text-yellow-400' />
-            <RiStarHalfFill size={20} className='text-yellow-400'/>
+            <RiStarHalfFill size={20} className='text-yellow-400' />
             <p className='md:text-lg text-sm text-gray-500 ml-2'>4.5 (128 reviews)</p>
           </div>
-          <h1 className='md:text-3xl text-2xl font-semibold mt-6 text-gray-800'>₹ {product.price}</h1>
+          <h1 className='md:text-2xl text-2xl font-semibold mt-6 text-gray-700'>₹ {product.price}</h1>
           <div className='flex gap-2 mt-5'>
             <div className='md:w-20 md:h-20 w-18 h-18 rounded-sm border-1 border-gray-300 overflow-hidden'>
               <img src={product.image} className='w-full h-full object-cover object-top' alt="" />
@@ -57,8 +57,10 @@ const ProductDeatils = () => {
               <img src={product.image} className='w-full h-full object-cover object-top' alt="" />
             </div>
           </div>
-          <button className='py-2 mt-8 w-full bg-green-700 block text-white cursor-pointer hover:bg-green-800 rounded-sm'>Add to Cart</button>
-          <button className='py-2 mt-2 w-full border-1 border-gray-300 cursor-pointer rounded-sm'>Buy Now</button>
+          <div className='md:flex gap-2 mt-8'>
+            <button className='py-2 w-full md:w-60  bg-green-700 block text-white cursor-pointer hover:bg-green-800 rounded-sm'>Add to Cart</button>
+            <button className='py-2 w-full md:w-60 border-1 border-gray-300 cursor-pointer rounded-sm'>Buy Now</button>
+          </div>
         </div>
       </div>
     </div>

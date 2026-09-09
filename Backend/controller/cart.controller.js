@@ -40,11 +40,11 @@ module.exports.deleteItem = async (req, res) => {
     try {
         const prodId = req.params.prodId;
         const userId = req.user;
-        const deleteProduct = await cartModel.findOneAndDelete({userId: userId, productId: prodId });
-        if(!deleteProduct){
+        const deleteProduct = await cartModel.findOneAndDelete({ userId: userId, productId: prodId });
+        if (!deleteProduct) {
             return res.status(404).json({ message: "Product not found" });
         }
-            return res.status(200).json({ message: "Product Deleted Successfully" });
+        return res.status(200).json({ message: "Product Deleted Successfully" });
     } catch (error) {
         console.log("Error deleting product from cart:", error);
         return res.status(400).json({ message: "Error", error })

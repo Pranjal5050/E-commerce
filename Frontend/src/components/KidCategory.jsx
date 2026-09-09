@@ -16,11 +16,9 @@ const KidCategory = () => {
                     return prod.category.toLowerCase() === "kids";
                 });
                 setProduct(kidproducts);
-                console.log(res.data.products);
             } catch (error) {
                 console.log("Error", error)
             }
-            console.log(product)
         }
         fetchProduct()
     }, [])

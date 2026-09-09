@@ -2,33 +2,34 @@ import { RiArrowRightBoxLine, RiBarcodeBoxLine, RiGroup3Line, RiMacbookLine, RiS
 import axios from 'axios';
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
+import {toast, ToastContainer} from 'react-toastify'
 
 const AdminLogin = () => {
     const navigate = useNavigate();
     const [email, setEmail] = React.useState('');
     const [password, setPassword] = React.useState('');
 
-    const handleLogin =async (e) => {
+    const handleLogin = async (e) => {
         e.preventDefault();
-        
+
         const res = await axios.post(`${import.meta.env.VITE_API_ENDPOINT}/admin/login`, {
             email,
             password
         });
 
-        if(res.data){
-            localStorage.setItem("adminToken", res.data.token);
-            navigate("/admin");
+        if (!res.data) {
+            toast.error("Email And Password not valid");
         }
-        
-        console.log("Login Response:", res.data.token);
+        localStorage.setItem("adminToken", res.data.token);
+        navigate("/admin");
     }
 
 
     return (
         <div className='w-full h-screen flex overflow-hidden'>
+            <ToastContainer/>
             {/* {Left} */}
-            <div className='w-1/2 h-full p-5 bg-gray-200 bg-gradient-to-br from-[#01150C] via-[#052B18] to-[#0B3D20]'>
+            <div className='w-1/2 h-full p-5 hidden md:block bg-gray-200 bg-gradient-to-br from-[#01150C] via-[#052B18] to-[#0B3D20]'>
                 {/* {Logo} */}
                 <img src="/images/admin-logo.png" className='w-40' alt="Logo" />
                 <div className='text-white'>
@@ -72,7 +73,7 @@ const AdminLogin = () => {
                 </div>
             </div>
             {/* {Right} */}
-            <div className='w-1/2 h-full bg-[#ffff] rounded-sm flex items-center justify-center'>
+            <div className='sm:w-1/2 w-full p-5 sm:p-0 h-full mx-auto sm:mx-0 bg-[#ffff] rounded-sm flex items-center justify-center'>
                 <div className='w-98 py-2 shadow-lg rounded-md p-2'>
                     <div className='w-10 h-10 rounded-full bg-green-100 flex items-center justify-center mx-auto'>
                         <RiShieldUserLine size={34} className='text-green-800' />
@@ -88,6 +89,7 @@ const AdminLogin = () => {
                                     name='email'
                                     type="email"
                                     value={email}
+                                    required
                                     onChange={(e) => { setEmail(e.target.value) }}
                                     placeholder='Enter your email'
                                     className='w-full outline-none border border-gray-300 rounded-md p-2 mt-1 mb-2'
@@ -99,6 +101,7 @@ const AdminLogin = () => {
                                     name='password'
                                     type="password"
                                     value={password}
+                                    required
                                     onChange={(e) => { setPassword(e.target.value) }}
                                     placeholder='Enter your password'
                                     className='w-full outline-none border border-gray-300 rounded-md p-2 mt-1 mb-2'
@@ -109,7 +112,7 @@ const AdminLogin = () => {
                                 Login To Dashboard <RiArrowRightBoxLine />
                             </button>
 
-                            <p className='text-sm text-center text-gray-500 mt-5'>© 2023 We-mart. All rights reserved.</p>
+                            <p className='text-sm text-center text-gray-500 mt-5'>© 2026 We-mart. All rights reserved.</p>
                         </div>
                     </form>
                 </div>

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import BottomNavbar from './BottomNavbar'
-import { RiArrowRightLine, RiShoppingBag2Line, RiMapPinLine, RiPencilLine, RiArrowLeftLine } from '@remixicon/react'
+import { RiArrowRightLine, RiShoppingBag2Line, RiMapPinLine, RiCustomerService2Line, RiArrowLeftLine, RiLogoutBoxLine } from '@remixicon/react'
 import { jwtDecode } from "jwt-decode";
 import axios from 'axios';
 import { Link, useParams } from 'react-router-dom';
@@ -47,9 +47,22 @@ const UserAccount = () => {
         )
     }
 
+
+    async function handleLogout() {
+        try {
+            const response = await axios.get(`${import.meta.env.VITE_API_ENDPOINT}/user/logout`);
+            if(response.status === 200){
+                localStorage.removeItem("token")
+                navigate('/login');
+            }
+        } catch (error) {
+            console.log("Error", error);
+        }
+    }
+
     return (
         <div className='w-full h-screen bg-gray-100 p-2'>
-            
+
             <div className='p-5'>
                 <h1 className='text-3xl font-sans font-bold md:text-center md:text-2xl'>My Account</h1>
             </div>
@@ -70,10 +83,11 @@ const UserAccount = () => {
                     </div>
                     <RiArrowRightLine className='text-gray-500' />
                 </Link><hr />
+
                 <div className='w-full bg-[#ffff] flex justify-between mt-5 rounded-lg p-5'>
                     <div className='flex items-center gap-2'>
-                        <RiMapPinLine size={20} className='text-green-600' />
-                        <h1 className='text-md font-semibold'>Address</h1>
+                        <RiCustomerService2Line size={20} className='text-green-600' />
+                        <h1 className='text-md font-semibold'>Contact 24*7</h1>
                     </div>
                     <RiArrowRightLine className='text-gray-500' />
                 </div><hr />
@@ -86,20 +100,8 @@ const UserAccount = () => {
                     </div>
                     <RiArrowRightLine className='text-gray-500' />
                 </div><hr />
-                <div className='w-full bg-[#ffff] flex justify-between mt-5 rounded-lg p-5'>
-                    <div className='flex items-center gap-2'>
-                        <RiMapPinLine size={20} className='text-green-600' />
-                        <h1 className='text-md font-semibold'>Address</h1>
-                    </div>
-                    <RiArrowRightLine className='text-gray-500' />
-                </div><hr />
-                <div className='w-full bg-[#ffff] flex justify-between mt-5 rounded-lg p-5'>
-                    <div className='flex items-center gap-2'>
-                        <RiMapPinLine size={20} className='text-green-600' />
-                        <h1 className='text-md font-semibold'>Address</h1>
-                    </div>
-                    <RiArrowRightLine className='text-gray-500' />
-                </div><hr />
+
+                <button onClick={(()=>{handleLogout()})} className='flex items-center justify-center gap-2 py-3 bg-red-500 cursor-pointer hover:bg-red-700 mt-10 w-full text-white rounded'>Logout <span><RiLogoutBoxLine /></span></button>
             </div>
             <BottomNavbar />
         </div>

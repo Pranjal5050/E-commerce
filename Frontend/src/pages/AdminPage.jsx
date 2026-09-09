@@ -57,16 +57,16 @@ const AdminPage = () => {
                     <div className='md:w-1/2 w-full h-full'>
                         <div>
                             <label>Title <span className='text-red-600'>*</span></label>
-                            <input name='title' value={title} onChange={(e) => setTitle(e.target.value)} type="text" className='w-full p-2 rounded-sm outline-none border border-gray-300 mb-6 mt-2' placeholder='Enter Product Title' />
+                            <input name='title' value={title} required onChange={(e) => setTitle(e.target.value)} type="text" className='w-full p-2 rounded-sm outline-none border border-gray-300 mb-6 mt-2' placeholder='Enter Product Title' />
 
                             <label>Description <span className='text-red-600'>*</span></label>
-                            <textarea name="description" value={description} onChange={(e) => setDescription(e.target.value)} className='w-full text-sm resize-none p-2 rounded-sm outline-none border border-gray-300 mt-2' placeholder='Enter Product Description'></textarea>
+                            <textarea name="description" value={description} required onChange={(e) => setDescription(e.target.value)} className='w-full text-sm resize-none p-2 rounded-sm outline-none border border-gray-300 mt-2' placeholder='Enter Product Description'></textarea>
 
                             <label>Price <span className='text-red-600'>*</span></label>
-                            <input name="price" value={price} onChange={(e) => setPrice(e.target.value)} type="number" className='w-full p-2 rounded-sm outline-none border border-gray-300 mb-6 mt-2' placeholder='Enter Product Price' />
+                            <input name="price" value={price} required onChange={(e) => setPrice(e.target.value)} type="number" className='w-full p-2 rounded-sm outline-none border border-gray-300 mb-6 mt-2' placeholder='Enter Product Price' />
 
                             <label>Category <span className='text-red-600'>*</span></label>
-                            <select name="category" value={category} onChange={(e) => setCategory(e.target.value)} className='w-full p-2 rounded-sm outline-none border border-gray-300 mb-6 mt-2'>
+                            <select name="category" value={category} required onChange={(e) => setCategory(e.target.value)} className='w-full p-2 rounded-sm outline-none border border-gray-300 mb-6 mt-2'>
                                 <option value="women">Women</option>
                                 <option value="men">Men</option>
                                 <option value="kids">Kids</option>
@@ -79,7 +79,7 @@ const AdminPage = () => {
                     <div className='md:w-1/2 w-full h-full'>
                         <h1>Product Image <span className='text-red-600'>*</span></h1>
 
-                        <input type="file" className='mt-5' name='image' onChange={(e) => setImage(e.target.files[0])} />
+                        <input type="file" required className='mt-5' name='image' onChange={(e) => setImage(e.target.files[0])} />
                     </div>
                 </div>
                 <div className='flex justify-end'>
