@@ -4,49 +4,52 @@ import axios from 'axios';
 import { ToastContainer, toast } from 'react-toastify';
 
 const AdminPage = () => {
-    const navigate = useNavigate();
-    const token = localStorage.getItem("adminToken");
 
-    useEffect(() => {
-        if (!token) {
-            navigate("/admin/login");
-        }
-    }, [token, navigate]);
+        const navigate = useNavigate();
+        const token = localStorage.getItem("adminToken");
 
-    const [title, setTitle] = useState("");
-    const [description, setDescription] = useState("");
-    const [price, setPrice] = useState("");
-    const [category, setCategory] = useState("");
-    const [image, setImage] = useState(null);
-
-
-    const handleSubmit = async (e) => {
-        e.preventDefault();
-
-        const formData = new FormData();
-
-        formData.append("title", title);
-        formData.append("description", description);
-        formData.append("price", price);
-        formData.append("category", category);
-        formData.append("image", image);
-
-        const res = await axios.post(`${import.meta.env.VITE_API_ENDPOINT}/admin/createProduct`, formData, {
-            headers: {
-                Authorization: `Bearer ${token}`
+        useEffect(() => {
+            if (!token) {
+                navigate("/admin/login");
             }
-        });
-        if (res.data.success) {
-            toast.success("Product created successfully!");
-            setTitle("");
-            setDescription("");
-            setPrice("");
-            setCategory("");
-            setImage(null);
-        } else {
-            toast.error("Failed to create product.");
+        }, [token, navigate]);
+
+        const [title, setTitle] = useState("");
+        const [description, setDescription] = useState("");
+        const [price, setPrice] = useState("");
+        const [category, setCategory] = useState("");
+        const [image, setImage] = useState(null);
+
+
+        const handleSubmit = async (e) => {
+            e.preventDefault();
+
+            const formData = new FormData();
+
+            formData.append("title", title);
+            formData.append("description", description);
+            formData.append("price", price);
+            formData.append("category", category);
+            formData.append("image", image);
+
+            const res = await axios.post(`${import.meta.env.VITE_API_ENDPOINT}/admin/createProduct`, formData, {
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
+            });
+            if (res.status === 201) {
+                toast.success("Product created successfully!");
+                setTitle("");
+                setDescription("");
+                setPrice("");
+                setCategory("");
+                setImage("");
+            }
+            else{
+                toast.error("Server Error");
+            }
         }
-    }
+
 
     return (
         <div className='w-full h-screen bg-[#ffff] p-10'>

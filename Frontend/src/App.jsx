@@ -12,6 +12,8 @@ import AdminLogin from './pages/AdminLogin'
 import AdminPage from './pages/AdminPage'
 import MenCategory from './components/MenCategory'
 import KidCategory from './components/KidCategory'
+import ShoesCategory from './pages/ShoesCategory'
+import SunglassCategory from './pages/SunglassCategory'
 
 const App = () => {
   return (
@@ -29,6 +31,8 @@ const App = () => {
         <Route path="/admin" element={<AdminPage/>}></Route>
         <Route path='/category/men' element={<MenCategory/>}></Route>
         <Route path='/category/kids' element={<KidCategory/>}></Route>
+        <Route path='/category/shoes' element={<ShoesCategory/>}></Route>
+        <Route path='/category/sunglass' element={<SunglassCategory/>}></Route>
       </Routes>
     </div>
   )

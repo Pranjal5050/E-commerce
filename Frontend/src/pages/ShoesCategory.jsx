@@ -1,51 +1,49 @@
-import React, { useEffect, useState } from 'react'
-import axios from 'axios'
-import Navbar from './Navbar';
-import { RiShoppingBasketFill } from '@remixicon/react';
-import { Link } from 'react-router-dom';
-import { toast, ToastContainer } from 'react-toastify';
+import axios from "axios";
+import React, { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
+import { RiShoppingBasketFill } from "@remixicon/react";
+import Navbar from "../components/Navbar";
+import { addToCart } from "../services/cartService";
+import { toast, ToastContainer } from "react-toastify";
 
-const WomenCategory = () => {
+const ShoesCategory = () => {
+  const [product, setProduct] = useState([]);
 
-    const [product, setProducts] = useState([]);
+  useEffect(() => {
+    async function getProduct() {
+      try {
+        const res = await axios.get(
+          `${import.meta.env.VITE_API_ENDPOINT}/admin/getProducts`
+        );
 
-    async function validateUser(productId, quantity = 1) {
-        try {
-            const token = localStorage.getItem("token");
-            if (!token) {
-                toast.error("Please login first");
-                return;
-            }
-
-            const res = await axios.post(`${import.meta.env.VITE_API_ENDPOINT}/cart`, { productId, quantity }
-                , {
-                    headers: {
-                        Authorization: `Bearer ${token}`
-                    }
-                });
-            toast.success(res.data.message);
-            window.dispatchEvent(new Event("cartUpdated"));
-        } catch (error) {
-            toast.error(error.response?.data);
+        if (!res.data) {
+          toast.error("Not Found Any Product");
+          return;
         }
+
+        const shoeProduct = res.data.products.filter((prod) => {
+          return prod.category?.toLowerCase() === "shoes";
+        });
+
+        setProduct(shoeProduct);
+      } catch (error) {
+        toast.error("error: -", error);
+      }
     }
 
-    useEffect(() => {
+    getProduct();
+  }, []);
 
-        async function AllProducts() {
-            const res = await axios.get(`${import.meta.env.VITE_API_ENDPOINT}/admin/getProducts`);
+  async function handleAddToCart(productId) {
+    try {
+      await addToCart(productId);
+    } catch (error) {
+      toast.error("Server error");
+    }
+  }
 
-            const products = res.data.products.filter((prod) => {
-                return prod.category.toLowerCase() === "women";
-            });
-            setProducts(products)
-        }
-        AllProducts();
-
-    }, []);
-
-    return (
-        <div className="min-h-screen w-full bg-[#fafafa]">
+  return (
+    <div className="min-h-screen w-full bg-[#fafafa]">
       <ToastContainer />
       {/* Navbar */}
       <Navbar />
@@ -285,7 +283,7 @@ const WomenCategory = () => {
         </div>
       </main>
     </div>
-    )
-}
+  );
+};
 
-export default WomenCategory
+export default ShoesCategory;

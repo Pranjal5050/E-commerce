@@ -2,6 +2,7 @@ import { RiArrowRightLine, RiUserLine, RiVerifiedBadgeFill, RiShieldCheckLine } 
 import axios from 'axios'
 import React, { useState } from 'react'
 import {Link, useNavigate} from 'react-router-dom';
+import { toast, ToastContainer } from 'react-toastify';
 
 const UserRegister = () => {
 
@@ -31,13 +32,14 @@ const UserRegister = () => {
       localStorage.setItem("token", token);
       navigate('/');
     } catch (error) {
-      console.error(error)
+      toast.error(error)
     }
   }
 
 
   return (
     <div className='w-full h-screen bg-gray-100 flex'>
+      <ToastContainer/>
 
       {/* Left */}
       <div className='w-1/3 hidden md:block h-screen bg-green-50 p-10'>

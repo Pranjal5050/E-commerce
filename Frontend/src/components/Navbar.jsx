@@ -20,7 +20,7 @@ const Navbar = () => {
                     <div className='gap-6 md:flex tems-center justify-center ml-10 hidden'>
                         <Link to={'/'} className='hover:text-green-700 '>Home</Link>
                         <Link to={'/category/men'} className='hover:text-green-700 '>Men</Link>
-                        <Link to={'/cat/womens'} className='hover:text-green-700 '>Women</Link>
+                        <Link to={'/category/women'} className='hover:text-green-700 '>Women</Link>
                         <Link to={'/category/kids'} className='hover:text-green-700 '>Kids</Link>
                         <Link className='hover:text-green-700 '>New Arrivals</Link>
                     </div>
