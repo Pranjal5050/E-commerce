@@ -21,15 +21,15 @@ import {
 } from "lucide-react";
 import { RiArrowLeftLine } from "@remixicon/react";
 import { toast, ToastContainer } from "react-toastify";
+import { useCart } from "./CartContext";
 
 const Cart = () => {
-
+  const {fetchProduct} = useCart();
   const [product, setProduct] = useState([]);
-
   const token = localStorage.getItem("token");
   useEffect(() => {
 
-    const fetchProduct = async () => {
+    const fetchProducts = async () => {
 
       if (!token) return;
 
@@ -40,7 +40,7 @@ const Cart = () => {
       });
       setProduct(res.data.cartProduct);
     }
-    fetchProduct();
+    fetchProducts();
   }, [token]);
 
   const handlerRemove = async (productId) => {
@@ -56,6 +56,7 @@ const Cart = () => {
             item.productId._id === productId ? { ...item, quantity: item.quantity - 1 } : item,
           )
         )
+      fetchProduct();
       }
     } catch (error) {
       toast.error("Failed to remove product");
@@ -110,6 +111,7 @@ const Cart = () => {
       })
       if(productDelete.status === 200){
         toast.success("Product deleted successfully");
+        fetchProduct();
       }
     } catch(err){
       toast.error("Failed to delete product");

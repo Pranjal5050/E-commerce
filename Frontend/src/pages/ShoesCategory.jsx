@@ -1,12 +1,17 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { RiShoppingBasketFill } from "@remixicon/react";
 import Navbar from "../components/Navbar";
 import { addToCart } from "../services/cartService";
 import { toast, ToastContainer } from "react-toastify";
+import { UseCartStatus } from "../services/UseCartStatus";
+import { useCart } from "../components/CartContext";
 
 const ShoesCategory = () => {
+  const {fetchProduct} = useCart();
+  const navigate = useNavigate();
+  const {cartItem, setCartItem} = UseCartStatus();
   const [product, setProduct] = useState([]);
 
   useEffect(() => {
@@ -26,6 +31,7 @@ const ShoesCategory = () => {
         });
 
         setProduct(shoeProduct);
+
       } catch (error) {
         toast.error("error: -", error);
       }
@@ -36,7 +42,18 @@ const ShoesCategory = () => {
 
   async function handleAddToCart(productId) {
     try {
+      if(cartItem[productId]){
+        navigate("/cart");
+        return
+      }
       await addToCart(productId);
+
+      setCartItem((prev)=>({
+        ...prev, [productId] : true
+      }));
+
+      fetchProduct();
+
     } catch (error) {
       toast.error("Server error");
     }
@@ -265,6 +282,7 @@ const ShoesCategory = () => {
                       sm:px-3
                       sm:py-2
                       sm:text-xs
+                      cursor-pointer
                     "
                   >
                     <RiShoppingBasketFill
@@ -272,7 +290,7 @@ const ShoesCategory = () => {
                       className="sm:h-4 sm:w-4"
                     />
 
-                    <span>Add to cart</span>
+                    <span>{cartItem[item._id || item.id] ? "Go to Cart" : "Add to Cart"}</span>
                   </button>
 
                 </div>

@@ -4,9 +4,17 @@ import Navbar from '../components/Navbar';
 import { RiShoppingBasketFill } from '@remixicon/react';
 import { Link } from 'react-router-dom';
 import { toast, ToastContainer } from 'react-toastify';
+import { useNavigate } from 'react-router-dom';
+import { addToCart } from '../services/cartService';
+import { UseCartStatus } from '../services/UseCartStatus';
+import { useCart } from './CartContext';
 
 const MenCategory = () => {
+  const {fetchProduct} = useCart();
   const [product, setProduct] = useState([]);
+  const { cartItem, setCartItem } = UseCartStatus();
+  const navigate = useNavigate();
+
   useEffect(() => {
 
     async function getProduct() {
@@ -18,6 +26,7 @@ const MenCategory = () => {
           return product.category.toLowerCase() === 'men';
         });
         setProduct(menProducts);
+
       } catch (error) {
         toast.error("Error", error);
       }
@@ -25,28 +34,29 @@ const MenCategory = () => {
     getProduct();
   }, []);
 
-  const handleAddToCart = async (productId, quantity = 1) => {
-
+  const handleAddToCart = async (productId) => {
     try {
-      const token = localStorage.getItem("token");
-      if (!token) {
-        toast.error("Please login first");
-        return;
+      if (cartItem[productId]) {
+        navigate("/cart");
+        return
       }
-      const response = await axios.post(`${import.meta.env.VITE_API_ENDPOINT}/cart`, { productId, quantity },
-        {
-          headers: {
-            Authorization: `Bearer ${token}`
-          }
-        });
-        if(response.status === 200){
-          toast.success("Product addedd successfully");
-        }
-    } catch (err) {
-      toast.error("Error", err.message);
-    }
+      
+      await addToCart(productId)
 
+      setCartItem((prev) => ({
+        ...prev, [productId]: true
+      }));
+
+      fetchProduct();
+
+
+    } catch (error) {
+      toast.error("Server Error")
+    }
   }
+
+
+
 
   return (
     <div className="min-h-screen w-full bg-[#fafafa]">
@@ -245,40 +255,14 @@ const MenCategory = () => {
                   {/* Add To Cart */}
                   <button
                     onClick={() => handleAddToCart(item._id)}
-                    className="
-                      mt-2.5
-                      flex
-                      w-full
-                      items-center
-                      justify-center
-                      gap-1.5
-                      rounded-lg
-                      border
-                      border-green-800
-                      bg-white
-                      px-2
-                      py-1.5
-                      text-[10px]
-                      font-medium
-                      text-green-900
-                      transition-all
-                      duration-200
-                      hover:bg-green-900
-                      hover:text-white
-                      active:scale-[0.98]
-                      sm:mt-3
-                      sm:gap-2
-                      sm:px-3
-                      sm:py-2
-                      sm:text-xs
-                    "
+                    className=" mt-2.5 cursor-pointer flex w-full items-center justify-center gap-1.5 rounded-lg border border-green-800 bg-white px-2 py-1.5 text-[10px] font-medium text-green-900 transition-all duration-200 hover:bg-green-900 hover:text-white active:scale-[0.98] sm:mt-3 sm:gap-2 sm:px-3 sm:py-2 sm:text-xs"
                   >
                     <RiShoppingBasketFill
                       size={14}
                       className="sm:h-4 sm:w-4"
                     />
 
-                    <span>Add to cart</span>
+                    <span>{cartItem[item._id || item.id] ? "Go to cart" : "Add to cart"}</span>
                   </button>
 
                 </div>

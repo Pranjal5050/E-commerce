@@ -2,50 +2,56 @@ import React, { useEffect, useState } from 'react'
 import axios from 'axios'
 import Navbar from './Navbar';
 import { RiShoppingBasketFill } from '@remixicon/react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { toast, ToastContainer } from 'react-toastify';
+import { addToCart } from '../services/cartService';
+import { UseCartStatus } from '../services/UseCartStatus';
+import { useCart } from './CartContext';
 
 const WomenCategory = () => {
+  const {fetchProduct} = useCart();
+  const navigate = useNavigate();
+  const [product, setProducts] = useState([]);
 
-    const [product, setProducts] = useState([]);
+  const { cartItem, setCartItem } = UseCartStatus();
 
-    async function validateUser(productId, quantity = 1) {
-        try {
-            const token = localStorage.getItem("token");
-            if (!token) {
-                toast.error("Please login first");
-                return;
-            }
+  
+  useEffect(() => {
 
-            const res = await axios.post(`${import.meta.env.VITE_API_ENDPOINT}/cart`, { productId, quantity }
-                , {
-                    headers: {
-                        Authorization: `Bearer ${token}`
-                    }
-                });
-            toast.success(res.data.message);
-            window.dispatchEvent(new Event("cartUpdated"));
-        } catch (error) {
-            toast.error(error.response?.data);
-        }
+    async function AllProducts() {
+      const res = await axios.get(`${import.meta.env.VITE_API_ENDPOINT}/admin/getProducts`);
+
+      const products = res.data.products.filter((prod) => {
+        return prod.category.toLowerCase() === "women";
+      });
+      setProducts(products)
     }
+    AllProducts();
 
-    useEffect(() => {
+  }, []);
 
-        async function AllProducts() {
-            const res = await axios.get(`${import.meta.env.VITE_API_ENDPOINT}/admin/getProducts`);
+  const handleAddToCart = async (productId) => {
+    try {
+      if (cartItem[productId]) {
+        navigate("/cart");
+        return;
+      }
+      await addToCart(productId);
+      setCartItem((prev)=>({
+        ...prev, [productId] : true
+      }));
 
-            const products = res.data.products.filter((prod) => {
-                return prod.category.toLowerCase() === "women";
-            });
-            setProducts(products)
-        }
-        AllProducts();
+      fetchProduct()
+    } catch (error) {
+      toast.error("Server Error");
+    }
+  }
 
-    }, []);
 
-    return (
-        <div className="min-h-screen w-full bg-[#fafafa]">
+
+
+  return (
+    <div className="min-h-screen w-full bg-[#fafafa]">
       <ToastContainer />
       {/* Navbar */}
       <Navbar />
@@ -57,11 +63,11 @@ const WomenCategory = () => {
         <div className="mx-auto w-full max-w-[1600px] px-4 py-6 sm:px-6 md:px-8 lg:px-10 lg:py-8">
 
           <h1 className="text-2xl font-semibold tracking-tight text-green-900 sm:text-3xl">
-            Shoes
+            Women
           </h1>
 
           <p className="mt-1.5 text-xs text-gray-500 sm:mt-2 sm:text-sm">
-            Discover our best collection for Shoes
+            Discover our best collection for Women
           </p>
 
           {/* Products Grid */}
@@ -241,32 +247,7 @@ const WomenCategory = () => {
                   {/* Add To Cart */}
                   <button
                     onClick={() => handleAddToCart(item._id)}
-                    className="
-                      mt-2.5
-                      flex
-                      w-full
-                      items-center
-                      justify-center
-                      gap-1.5
-                      rounded-lg
-                      border
-                      border-green-800
-                      bg-white
-                      px-2
-                      py-1.5
-                      text-[10px]
-                      font-medium
-                      text-green-900
-                      transition-all
-                      duration-200
-                      hover:bg-green-900
-                      hover:text-white
-                      active:scale-[0.98]
-                      sm:mt-3
-                      sm:gap-2
-                      sm:px-3
-                      sm:py-2
-                      sm:text-xs
+                    className=" mt-2.5 flex w-full items-center justify-center gap-1.5 rounded-lg border border-green-800 bg-white px-2 py-1.5 text-[10px] font-medium text-green-900 transition-all duration-200 hover:bg-green-900 hover:text-white active:scale-[0.98] sm:mt-3 sm:gap-2 sm:px-3 sm:py-2 sm:text-xs
                     "
                   >
                     <RiShoppingBasketFill
@@ -274,7 +255,7 @@ const WomenCategory = () => {
                       className="sm:h-4 sm:w-4"
                     />
 
-                    <span>Add to cart</span>
+                    <span>{cartItem[item._id || item.id] ? "Go to Cart" : "Add to Cart"}</span>
                   </button>
 
                 </div>
@@ -285,7 +266,7 @@ const WomenCategory = () => {
         </div>
       </main>
     </div>
-    )
+  )
 }
 
 export default WomenCategory
