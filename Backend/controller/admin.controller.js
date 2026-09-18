@@ -85,3 +85,8 @@ module.exports.getProductById = async (req, res)=>{
         res.status(500).json({message : "Server Error", error: error.message});
     }
 }
+
+module.exports.logout = async (req, res)=>{
+    req.clearCookie("token");
+    res.status(200).json({message:"Logged Out Succesfully"});
+}

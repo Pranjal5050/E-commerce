@@ -15,6 +15,8 @@ const AdminLogin = () => {
         const res = await axios.post(`${import.meta.env.VITE_API_ENDPOINT}/admin/login`, {
             email,
             password
+        }, {
+            withCredentials: true
         });
 
         if (!res.data) {

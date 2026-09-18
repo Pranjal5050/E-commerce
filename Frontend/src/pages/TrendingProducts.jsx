@@ -77,7 +77,7 @@ const TrendingProducts = () => {
       >
 
         {products.map((item, index)=>{
-         return <div key={index} className={index === 6 ? "md:hidden" : ""}>
+         return <div key={index} className={index === 5 ? "md:hidden" : ""}>
          <div
           className="
                   group 

@@ -14,4 +14,6 @@ router.get("/getProducts", adminController.getProduct);
 
 router.get(`/getProductById/:id`, adminController.getProductById);
 
+router.get("/logout", adminController.logout);
+
 module.exports = router;

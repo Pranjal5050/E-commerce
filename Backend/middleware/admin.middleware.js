@@ -2,7 +2,6 @@ const jwt = require("jsonwebtoken");
 const userModel = require("../models/user.model");
 
 module.exports.authMiddleware = ((req, res, next) => {
-    console.log("Authorization Header:", req.headers.authorization);
     try {
         const token = req.cookies.token || req.headers.authorization.split(" ")[1];
 

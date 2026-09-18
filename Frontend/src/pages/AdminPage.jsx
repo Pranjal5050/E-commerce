@@ -5,56 +5,66 @@ import { ToastContainer, toast } from 'react-toastify';
 
 const AdminPage = () => {
 
-        const navigate = useNavigate();
-        const token = localStorage.getItem("adminToken");
+    const navigate = useNavigate();
+    const token = localStorage.getItem("adminToken");
 
-        useEffect(() => {
-            if (!token) {
-                navigate("/admin/login");
-            }
-        }, [token, navigate]);
-
-        const [title, setTitle] = useState("");
-        const [description, setDescription] = useState("");
-        const [price, setPrice] = useState("");
-        const [category, setCategory] = useState("");
-        const [image, setImage] = useState(null);
-
-
-        const handleSubmit = async (e) => {
-            e.preventDefault();
-
-            const formData = new FormData();
-
-            formData.append("title", title);
-            formData.append("description", description);
-            formData.append("price", price);
-            formData.append("category", category);
-            formData.append("image", image);
-
-            const res = await axios.post(`${import.meta.env.VITE_API_ENDPOINT}/admin/createProduct`, formData, {
-                headers: {
-                    Authorization: `Bearer ${token}`
-                }
-            });
-            if (res.status === 201) {
-                toast.success("Product created successfully!");
-                setTitle("");
-                setDescription("");
-                setPrice("");
-                setCategory("");
-                setImage("");
-            }
-            else{
-                toast.error("Server Error");
-            }
+    useEffect(() => {
+        if (!token) {
+            navigate("/admin/login");
         }
+    }, [token, navigate]);
+
+    const [title, setTitle] = useState("");
+    const [description, setDescription] = useState("");
+    const [price, setPrice] = useState("");
+    const [category, setCategory] = useState("");
+    const [image, setImage] = useState(null);
+
+
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+
+        const formData = new FormData();
+
+        formData.append("title", title);
+        formData.append("description", description);
+        formData.append("price", price);
+        formData.append("category", category);
+        formData.append("image", image);
+
+        const res = await axios.post(`${import.meta.env.VITE_API_ENDPOINT}/admin/createProduct`, formData, {
+            withCredentials: true
+        });
+        if (res.status === 201) {
+            toast.success("Product created successfully!");
+            setTitle("");
+            setDescription("");
+            setPrice("");
+            setCategory("");
+            setImage("");
+        }
+        else {
+            toast.error("Server Error");
+        }
+    }
+
+    const handleLogout = async () => {
+        try {
+            await axios.get(`${import.meta.env.VITE_API_ENDPOINT}/admin/logout`);
+            navigate("/admin/login");
+        } catch (error) {
+            toast.error("Unexpected Error");
+        }
+    }
 
 
     return (
         <div className='w-full h-screen bg-[#ffff] p-10'>
             <ToastContainer />
-            <h1 className='text-2xl font-semibold text-green-800'>Add New Product</h1>
+            <div className='flex items-center justify-between'>
+                <h1 className='text-2xl font-semibold text-green-800'>Add New Product</h1>
+                <button onClick={()=>{handleLogout()}} className='px-6 py-1 cursor-pointer md:bg-white md:text-red-600 md:hover:bg-red-600 md:hover:text-white duration-300 rounded bg-red-600 text-white'>Logout</button>
+            </div>
             <form onSubmit={handleSubmit}>
                 <div className='w-full mt-5 p-5 shadow-2xl md:flex gap-10 rounded-sm'>
                     <div className='md:w-1/2 w-full h-full'>
