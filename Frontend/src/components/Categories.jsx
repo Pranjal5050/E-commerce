@@ -37,14 +37,14 @@ const Categories = () => {
     }
   ]
   return (
-    <div className='md:p-5 mt-10'>
+    <div className='md:mt-5'>
 
-      <div className='flex items-center justify-between px-5 '>
-        <h1 className='md:text-3xl text-2xl font-bold'>Top Categories</h1>
-        <Link to={'/view_all'} className='text-green-600 text-sm font-bold'>View All <hr /></Link>
+      <div className='flex items-center justify-between px-5'>
+        <h1 className='md:text-2xl text-[20px] font-semibold'>Top Categories</h1>
+        <Link to={'/view_all'} className='text-green-800 text-sm font-semibold'>View All <hr /></Link>
       </div>
 
-      <div className='grid grid-cols-2 md:grid-cols-2 lg:grid-cols-5 w-full p-5 mt-5 gap-5'>
+      <div className='grid grid-cols-2 md:grid-cols-2 lg:grid-cols-5 w-full p-5 gap-5'>
 
         {products.map((item, index) => {
           return <div key={index} className={index === 4 ? "hidden md:block lg:block" : ""}>

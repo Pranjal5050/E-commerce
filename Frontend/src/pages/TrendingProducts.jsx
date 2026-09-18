@@ -1,84 +1,21 @@
-import axios from "axios";
-import React, { useEffect, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
-import { RiShoppingBasketFill } from "@remixicon/react";
-import Navbar from "../components/Navbar";
-import { addToCart } from "../services/cartService";
-import { toast, ToastContainer } from "react-toastify";
-import { UseCartStatus } from "../services/UseCartStatus";
-import { useCart } from "../components/CartContext";
+import { RiShoppingBasketFill } from '@remixicon/react'
+import React from 'react'
+import { Link } from 'react-router-dom'
 
-const ShoesCategory = () => {
-  const {fetchProduct} = useCart();
-  const navigate = useNavigate();
-  const {cartItem, setCartItem} = UseCartStatus();
-  const [product, setProduct] = useState([]);
-
-  useEffect(() => {
-    async function getProduct() {
-      try {
-        const res = await axios.get(
-          `${import.meta.env.VITE_API_ENDPOINT}/admin/getProducts`
-        );
-
-        if (!res.data) {
-          toast.error("Not Found Any Product");
-          return;
-        }
-
-        const shoeProduct = res.data.products.filter((prod) => {
-          return prod.category?.toLowerCase() === "shoes";
-        });
-
-        setProduct(shoeProduct);
-
-      } catch (error) {
-        toast.error("error: -", error);
-      }
-    }
-
-    getProduct();
-  }, []);
-
-  async function handleAddToCart(productId) {
-    try {
-      if(cartItem[productId]){
-        navigate("/cart");
-        return
-      }
-      await addToCart(productId);
-
-      setCartItem((prev)=>({
-        ...prev, [productId] : true
-      }));
-
-      fetchProduct();
-
-    } catch (error) {
-      toast.error("Server error");
-    }
-  }
-
+const TrendingProducts = () => {
   return (
-    <div className="min-h-screen w-full bg-[#fafafa]">
-      <ToastContainer />
-      {/* Navbar */}
-      <Navbar />
+    <div className='p-5'>
+      <div className='flex item-center justify-between'>
+        <div>
+          <h1 className='md:text-2xl font-semibold'>Trending Products</h1>
+          <p className='text-sm'>Most loved style, just for you.</p>
+        </div>
+        <Link to={'/view_all'} className='text-green-800 text-sm font-semibold'>View All <hr /></Link>
+      </div>
 
-      {/* Main Content */}
-      <main className="w-full">
 
-        {/* Category Header */}
-        <div className="mx-auto w-full max-w-[1600px] px-4 py-6 sm:px-6 md:px-8 lg:px-10 lg:py-8">
 
-          <h1 className="text-2xl font-semibold tracking-tight text-green-900 sm:text-3xl">
-            Shoes
-          </h1>
-
-          <p className="mt-1.5 text-xs text-gray-500 sm:mt-2 sm:text-sm">
-            Discover our best collection for Shoes
-          </p>
-
+      
           {/* Products Grid */}
           <div
             className="
@@ -101,11 +38,10 @@ const ShoesCategory = () => {
             "
           >
 
-            {product.map((item) => (
               <div
-                key={item._id}
                 className="
-                  group min-w-0
+                  group 
+                  min-w-0
                   overflow-hidden
                   rounded-xl
                   border
@@ -121,19 +57,19 @@ const ShoesCategory = () => {
               >
 
                 {/* Product Image */}
-                <Link to={`/productDetails/${item._id}`}>
+                <Link>
                   <div
                     className="
                       relative
-                      aspect-[4/4.5]
+                      aspect-[4/3.5]
                       w-full
                       overflow-hidden
                       bg-gray-100
                     "
                   >
                     <img
-                      src={item.image}
-                      alt={item.title}
+                      src="../images/men.png"
+                      alt="Image"
                       className="
                         h-full
                         w-full
@@ -170,7 +106,6 @@ const ShoesCategory = () => {
 
                     {/* Wishlist */}
                     <button
-                      onClick={(e) => e.preventDefault()}
                       className="
                         absolute
                         right-2
@@ -205,7 +140,7 @@ const ShoesCategory = () => {
                 <div className="p-2.5 sm:p-3.5">
 
                   {/* Title */}
-                  <Link to={`/productDetails/${item._id}`}>
+                  <Link>
                     <h2
                       className="
                         line-clamp-2
@@ -213,20 +148,33 @@ const ShoesCategory = () => {
                         text-[11px]
                         font-medium
                         leading-4
-                        text-gray-800
+                        text-gray-700
                         transition-colors
+                        font-semibold
                         group-hover:text-green-900
                         sm:min-h-[40px]
                         sm:text-sm
                         sm:leading-5
                       "
                     >
-                      {item.title}
+                      T-shirt Men fashion trends with fashion
                     </h2>
                   </Link>
 
                   {/* Rating */}
                   <div className="mt-1.5 flex items-center gap-1">
+                    <span className="text-[11px] text-yellow-500 sm:text-xs">
+                      ★
+                    </span>
+
+                    <span className="text-[11px] text-yellow-500 sm:text-xs">
+                      ★
+                    </span>
+
+                    <span className="text-[11px] text-yellow-500 sm:text-xs">
+                      ★
+                    </span>
+
                     <span className="text-[11px] text-yellow-500 sm:text-xs">
                       ★
                     </span>
@@ -242,21 +190,22 @@ const ShoesCategory = () => {
 
                   {/* Price */}
                   <div className="mt-1.5 flex items-center gap-1.5">
-                    <span className="text-sm font-bold text-gray-900 sm:text-base">
-                      ₹{item.price}
+                    <span className="text-md font-bold text-gray-900 sm:text-base">
+                      ₹499
                     </span>
 
-                    {/* Optional old price */}
-                    {item.oldPrice && (
                       <span className="text-[9px] text-gray-400 line-through sm:text-xs">
-                        ₹{item.oldPrice}
+                        ₹299
                       </span>
-                    )}
+
+                      <span className="text-[9px] md:text-[13px] text-green-600 font-bold sm:text-xs">
+                        35% OFF
+                      </span>
+                    
                   </div>
 
                   {/* Add To Cart */}
                   <button
-                    onClick={() => handleAddToCart(item._id)}
                     className="
                       mt-2.5
                       flex
@@ -291,18 +240,39 @@ const ShoesCategory = () => {
                       className="sm:h-4 sm:w-4"
                     />
 
-                    <span>{cartItem[item._id || item.id] ? "Go to Cart" : "Add to Cart"}</span>
+                    <span>Add to Cart</span>
                   </button>
 
                 </div>
               </div>
-            ))}
+
+               
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
           </div>
-        </div>
-      </main>
-    </div>
-  );
-};
 
-export default ShoesCategory;
+
+
+
+    </div>
+  )
+}
+
+export default TrendingProducts

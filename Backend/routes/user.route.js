@@ -18,4 +18,8 @@ router.get('/profile/:userId', userController.userProfile);
 
 router.get("/logout", userController.Logout);
 
+//find random products
+
+router.get("/randomproduct", userController.randomProducts);
+
 module.exports = router

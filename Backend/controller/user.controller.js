@@ -3,6 +3,7 @@ const userModel = require("../models/user.model");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const mongoose = require("mongoose");
+const productModel = require("../models/product.model");
 
 module.exports.userRegister = async (req, res) => {
     const errors = validationResult(req);
@@ -93,4 +94,16 @@ module.exports.userProfile = async (req, res) => {
 module.exports.Logout = (req, res) => {
     res.clearCookie("token");
     res.status(200).json("Loggedout successfully");
+}
+
+module.exports.randomProducts = async (req, res) => {
+    try {
+        const findProducts = await productModel.aggregate([{ $sample: { size: 5 } }]);
+        res.status(200).json({
+            message: "Product find successfully",
+            products: findProducts
+        });
+    } catch (error) {
+        res.status(404).json({ message: "Error:-", error });
+    }
 }
