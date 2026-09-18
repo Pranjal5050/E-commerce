@@ -68,7 +68,7 @@ const UserAccount = () => {
             </div>
             <div className='w-full p-3 mt-5 bg-[#ffff] flex gap-8 rounded-lg items-center'>
                 <div className='w-25 h-25 rounded-full bg-gray-600 flex items-center justify-center overflow-hidden'>
-                    <img src="images/women.png" className='w-full h-full object-cover object-top' alt="" />
+                    <img src="images/men.png" className='w-full h-full object-cover object-top' alt="" />
                 </div>
                 <div>
                     <h1 className='text-xl font-bold'>{user.fullname?.firstname} {user.fullname?.lastname}</h1>

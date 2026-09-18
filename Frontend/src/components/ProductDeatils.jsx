@@ -10,8 +10,14 @@ import {
 
 import { addToCart } from "../services/cartService";
 import { toast, ToastContainer } from "react-toastify";
+import { UseCartStatus } from "../services/UseCartStatus";
+import { useNavigate } from "react-router-dom";
+import { useCart } from "./CartContext";
 
 const ProductDeatils = () => {
+  const {cartItem, setCartItem} = UseCartStatus();
+  const {fetchProduct} = useCart()
+  const navigate = useNavigate();
   const { id } = useParams();
 
   const [product, setProduct] = useState(null);
@@ -61,7 +67,19 @@ const ProductDeatils = () => {
 
   async function handleAddtoCart(productId){
      try {
+      if(cartItem[productId]){
+        navigate('/cart')
+        return;
+      }
       await addToCart(productId);
+
+      setCartItem((prev)=>({
+        ...prev, [productId] : true
+      }))
+
+      fetchProduct();
+
+
      } catch (error) {
       toast.error("Server Error");
      }
@@ -88,7 +106,7 @@ const ProductDeatils = () => {
   }
 
   return (
-    <div className="min-h-screen w-full bg-[#fafafa]">
+    <div className="min-h-screen w-full bg-[#fafafa] mb-20 md:mb-0">
         <ToastContainer/>
       <Navbar />
 
@@ -329,7 +347,7 @@ const ProductDeatils = () => {
                 "
               >
                 <RiShoppingBasketLine size={19} />
-                Add to Cart
+               {cartItem[product._id || product.id] ? "Go to Cart" : "Add to cart"}
               </button>
 
               <button

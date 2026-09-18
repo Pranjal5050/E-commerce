@@ -24,7 +24,7 @@ import { toast, ToastContainer } from "react-toastify";
 import { useCart } from "./CartContext";
 
 const Cart = () => {
-  const {fetchProduct} = useCart();
+  const { fetchProduct } = useCart();
   const [product, setProduct] = useState([]);
   const token = localStorage.getItem("token");
   useEffect(() => {
@@ -56,7 +56,7 @@ const Cart = () => {
             item.productId._id === productId ? { ...item, quantity: item.quantity - 1 } : item,
           )
         )
-      fetchProduct();
+        fetchProduct();
       }
     } catch (error) {
       toast.error("Failed to remove product");
@@ -102,18 +102,18 @@ const Cart = () => {
     )
   }
 
-  const DeleteItem = async (productId)=>{
-    try{
+  const DeleteItem = async (productId) => {
+    try {
       const productDelete = await axios.delete(`${import.meta.env.VITE_API_ENDPOINT}/cart/${productId}`, {
-        headers : {
+        headers: {
           Authorization: `Bearer ${token}`
         }
       })
-      if(productDelete.status === 200){
+      if (productDelete.status === 200) {
         toast.success("Product deleted successfully");
         fetchProduct();
       }
-    } catch(err){
+    } catch (err) {
       toast.error("Failed to delete product");
     }
   }
@@ -199,11 +199,13 @@ const Cart = () => {
 
                 <div className="flex items-center gap-4 sm:gap-5">
 
-                  <img
-                    src={item.productId.image}
-                    className="w-[85px] h-[95px] sm:w-[95px] sm:h-[105px] rounded-lg object-cover object-top shrink-0"
-                    alt="Premium Black T Shirt"
-                  />
+                  <Link to={`/productDetails/${item.productId._id}`}>
+                    <img
+                      src={item.productId.image}
+                      className="w-[85px] h-[95px] sm:w-[95px] sm:h-[105px] rounded-lg object-cover object-top shrink-0"
+                      alt="Premium Black T Shirt"
+                    />
+                  </Link>
 
                   <div className="min-w-0">
 
