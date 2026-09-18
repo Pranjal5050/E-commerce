@@ -98,7 +98,7 @@ module.exports.Logout = (req, res) => {
 
 module.exports.randomProducts = async (req, res) => {
     try {
-        const findProducts = await productModel.aggregate([{ $sample: { size: 5 } }]);
+        const findProducts = await productModel.aggregate([{ $sample: { size: 6 } }]);
         res.status(200).json({
             message: "Product find successfully",
             products: findProducts
