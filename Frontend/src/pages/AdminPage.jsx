@@ -17,6 +17,8 @@ const AdminPage = () => {
     const [title, setTitle] = useState("");
     const [description, setDescription] = useState("");
     const [price, setPrice] = useState("");
+    const [oldprice, setOldPrice] = useState("");
+    const [perecnt, setPercent] = useState("");
     const [category, setCategory] = useState("");
     const [image, setImage] = useState(null);
 
@@ -29,6 +31,8 @@ const AdminPage = () => {
         formData.append("title", title);
         formData.append("description", description);
         formData.append("price", price);
+        formData.append("oldprice", oldprice);
+        formData.append("percent", perecnt);
         formData.append("category", category);
         formData.append("image", image);
 
@@ -40,6 +44,8 @@ const AdminPage = () => {
             setTitle("");
             setDescription("");
             setPrice("");
+            setOldPrice("");
+            setPercent("");
             setCategory("");
             setImage("");
         }
@@ -53,6 +59,7 @@ const AdminPage = () => {
             await axios.get(`${import.meta.env.VITE_API_ENDPOINT}/admin/logout`);
             navigate("/admin/login");
         } catch (error) {
+            console.log(error)
             toast.error("Unexpected Error");
         }
     }
@@ -78,6 +85,12 @@ const AdminPage = () => {
                             <label>Price <span className='text-red-600'>*</span></label>
                             <input name="price" value={price} required onChange={(e) => setPrice(e.target.value)} type="number" className='w-full p-2 rounded-sm outline-none border border-gray-300 mb-6 mt-2' placeholder='Enter Product Price' />
 
+                            <label>OldPrice <span className='text-red-600'>*</span></label>
+                            <input name="oldprice" value={oldprice} required onChange={(e) => setOldPrice(e.target.value)} type="number" className='w-full p-2 rounded-sm outline-none border border-gray-300 mb-6 mt-2' placeholder='Enter Product OldPrice' />
+
+                            <label>%OFF <span className='text-red-600'>*</span></label>
+                            <input name="percent" value={perecnt} required onChange={(e) => setPercent(e.target.value)} type="number" className='w-full p-2 rounded-sm outline-none border border-gray-300 mb-6 mt-2' placeholder='Enter Product Percent OFF' />
+                            
                             <label>Category <span className='text-red-600'>*</span></label>
                             <select name="category" value={category} required onChange={(e) => setCategory(e.target.value)} className='w-full p-2 rounded-sm outline-none border border-gray-300 mb-6 mt-2'>
                                 <option value="women">Women</option>

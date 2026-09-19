@@ -292,9 +292,9 @@ const ProductDeatils = () => {
                 </span>
               )}
 
-              {product.discount && (
+              {product.percent && (
                 <span className="mb-1 rounded-md bg-green-50 px-2 py-1 text-xs font-semibold text-green-700">
-                  {product.discount}% OFF
+                  {product.percent}% OFF
                 </span>
               )}
 

@@ -1,9 +1,13 @@
 const jwt = require("jsonwebtoken");
 const userModel = require("../models/user.model");
 
-module.exports.authMiddleware = ((req, res, next) => {
+module.exports.authMiddleware = async (req, res, next) => {
     try {
-        const token = req.cookies.token || req.headers.authorization.split(" ")[1];
+        const authHeader = req.headers.authorization;
+
+        const token =
+            req.cookies.token ||
+            (authHeader ? authHeader.split(" ")[1] : null);
 
         if (!token) {
             return res.status(401).json({ message: "Unauthorized" });
@@ -11,9 +15,15 @@ module.exports.authMiddleware = ((req, res, next) => {
 
         const decode = jwt.verify(token, process.env.secret);
 
-        const user = userModel.findById(decode.id || decode._id);
+        const user = await userModel.findById(decode.id || decode._id);
 
-        if (!user.role === "admin") {
+        if (!user) {
+            return res.status(401).json({
+                message: "User not found"
+            });
+        }
+
+        if (user.role !== "admin") {
             return res.status(404).json({ message: "Only admin can access this route" });
         }
 
@@ -22,4 +32,4 @@ module.exports.authMiddleware = ((req, res, next) => {
     } catch (error) {
         res.status(401).json({ message: "Unauthorized", error });
     }
-})
+}

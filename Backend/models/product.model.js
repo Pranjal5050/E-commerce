@@ -17,6 +17,14 @@ const ProductSchema = mongoose.Schema({
         type : String,
         required : true
     },
+    oldprice : {
+        type : String,
+        required : true
+    },
+    percent : {
+        type : String,
+        required : true
+    },
     category : {
         type : String
     }

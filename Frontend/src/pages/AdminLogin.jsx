@@ -2,7 +2,7 @@ import { RiArrowRightBoxLine, RiBarcodeBoxLine, RiGroup3Line, RiMacbookLine, RiS
 import axios from 'axios';
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import {toast, ToastContainer} from 'react-toastify'
+import { toast, ToastContainer } from 'react-toastify'
 
 const AdminLogin = () => {
     const navigate = useNavigate();
@@ -10,26 +10,26 @@ const AdminLogin = () => {
     const [password, setPassword] = React.useState('');
 
     const handleLogin = async (e) => {
-        e.preventDefault();
+        try {
+            e.preventDefault();
 
-        const res = await axios.post(`${import.meta.env.VITE_API_ENDPOINT}/admin/login`, {
-            email,
-            password
-        }, {
-            withCredentials: true
-        });
-
-        if (!res.data) {
-            toast.error("Email And Password not valid");
+            const res = await axios.post(`${import.meta.env.VITE_API_ENDPOINT}/admin/login`, {
+                email,
+                password
+            }, {
+                withCredentials: true
+            });
+            localStorage.setItem("adminToken", res.data.token);
+            navigate("/admin");
+        } catch (error) {
+          toast.error("Email and Password incorrect")
         }
-        localStorage.setItem("adminToken", res.data.token);
-        navigate("/admin");
     }
 
 
     return (
         <div className='w-full h-screen flex overflow-hidden'>
-            <ToastContainer/>
+            <ToastContainer />
             {/* {Left} */}
             <div className='w-1/2 h-full p-5 hidden md:block bg-gray-200 bg-gradient-to-br from-[#01150C] via-[#052B18] to-[#0B3D20]'>
                 {/* {Logo} */}

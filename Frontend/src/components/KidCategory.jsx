@@ -12,7 +12,7 @@ import { useCart } from "./CartContext";
 
 
 const KidCategory = () => {
-    const {fetchProduct} = useCart();
+    const { fetchProduct } = useCart();
     const { cartItem, setCartItem } = UseCartStatus();
     const navigate = useNavigate();
     const [product, setProduct] = useState([]);
@@ -244,6 +244,10 @@ const KidCategory = () => {
                                                 ₹{item.oldPrice}
                                             </span>
                                         )}
+
+                                        <span className="text-[9px] md:text-[13px] text-green-600 font-bold sm:text-xs">
+                                            ₹{item.percent}% OFF
+                                        </span>
                                     </div>
 
                                     {/* Add To Cart */}
@@ -256,7 +260,7 @@ const KidCategory = () => {
                       items-center
                       justify-center
                       gap-1.5
-                      rounded-lg
+                      rounded-md
                       border
                       border-green-800
                       bg-white
@@ -275,6 +279,7 @@ const KidCategory = () => {
                       sm:px-3
                       sm:py-2
                       sm:text-xs
+                      cursor-pointer
                     "
                                     >
                                         <RiShoppingBasketFill

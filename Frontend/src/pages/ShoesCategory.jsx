@@ -9,9 +9,9 @@ import { UseCartStatus } from "../services/UseCartStatus";
 import { useCart } from "../components/CartContext";
 
 const ShoesCategory = () => {
-  const {fetchProduct} = useCart();
+  const { fetchProduct } = useCart();
   const navigate = useNavigate();
-  const {cartItem, setCartItem} = UseCartStatus();
+  const { cartItem, setCartItem } = UseCartStatus();
   const [product, setProduct] = useState([]);
 
   useEffect(() => {
@@ -42,14 +42,14 @@ const ShoesCategory = () => {
 
   async function handleAddToCart(productId) {
     try {
-      if(cartItem[productId]){
+      if (cartItem[productId]) {
         navigate("/cart");
         return
       }
       await addToCart(productId);
 
-      setCartItem((prev)=>({
-        ...prev, [productId] : true
+      setCartItem((prev) => ({
+        ...prev, [productId]: true
       }));
 
       fetchProduct();
@@ -252,6 +252,10 @@ const ShoesCategory = () => {
                         ₹{item.oldPrice}
                       </span>
                     )}
+
+                    <span className="text-[9px] md:text-[13px] text-green-600 font-bold sm:text-xs">
+                      ₹{item.percent}% OFF
+                    </span>
                   </div>
 
                   {/* Add To Cart */}
@@ -264,7 +268,7 @@ const ShoesCategory = () => {
                       items-center
                       justify-center
                       gap-1.5
-                      rounded-lg
+                      rounded-sm
                       border
                       border-green-800
                       bg-white

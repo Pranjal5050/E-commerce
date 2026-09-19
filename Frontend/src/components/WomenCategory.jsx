@@ -9,13 +9,13 @@ import { UseCartStatus } from '../services/UseCartStatus';
 import { useCart } from './CartContext';
 
 const WomenCategory = () => {
-  const {fetchProduct} = useCart();
+  const { fetchProduct } = useCart();
   const navigate = useNavigate();
   const [product, setProducts] = useState([]);
 
   const { cartItem, setCartItem } = UseCartStatus();
 
-  
+
   useEffect(() => {
 
     async function AllProducts() {
@@ -37,8 +37,8 @@ const WomenCategory = () => {
         return;
       }
       await addToCart(productId);
-      setCartItem((prev)=>({
-        ...prev, [productId] : true
+      setCartItem((prev) => ({
+        ...prev, [productId]: true
       }));
 
       fetchProduct()
@@ -242,12 +242,16 @@ const WomenCategory = () => {
                         ₹{item.oldPrice}
                       </span>
                     )}
+
+                    <span className="text-[9px] md:text-[13px] text-green-600 font-bold sm:text-xs">
+                      ₹{item.percent}% OFF
+                    </span>
                   </div>
 
                   {/* Add To Cart */}
                   <button
                     onClick={() => handleAddToCart(item._id)}
-                    className=" mt-2.5 flex w-full items-center justify-center gap-1.5 rounded-lg border border-green-800 bg-white px-2 py-1.5 text-[10px] font-medium text-green-900 transition-all duration-200 hover:bg-green-900 hover:text-white active:scale-[0.98] sm:mt-3 sm:gap-2 sm:px-3 sm:py-2 sm:text-xs
+                    className=" mt-2.5 flex w-full items-center justify-center gap-1.5 rounded-sm border border-green-800 bg-white px-2 py-1.5 text-[10px] font-medium text-green-900 transition-all duration-200 hover:bg-green-900 hover:text-white active:scale-[0.98] sm:mt-3 sm:gap-2 sm:px-3 sm:py-2 sm:text-xs
                     "
                   >
                     <RiShoppingBasketFill

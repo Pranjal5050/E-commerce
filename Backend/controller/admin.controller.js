@@ -29,20 +29,24 @@ module.exports.adminLogin = async (req, res) => {
             return res.status(401).json({ message: "Invalid Email or Password" });
         }
 
-        const token = jwt.sign({id : admin._id}, process.env.secret);
-        res.cookie("token", token);
+        const token = jwt.sign({ id: admin._id }, process.env.secret);
+        res.cookie("token", token, {
+            httpOnly: true,
+            secure: true,
+            sameSite: "none"
+        });
 
         res.status(200).json({ message: "Admin Login Successfully", admin, token });
     } catch (error) {
-        res.status(401).json({ message : "Admin Login Error", error });
+        res.status(401).json({ message: "Admin Login Error", error });
     }
 }
 
 module.exports.productCreate = async (req, res) => {
     try {
-        const { title, description, category, price } = req.body;
+        const { title, description, category, price, oldprice, percent } = req.body;
 
-        if (!title || !description || !category || !price) {
+        if (!title || !description || !category || !price || !oldprice || !percent) {
             return res.status(401).json({ message: "All fields are required" });
         }
 
@@ -56,6 +60,8 @@ module.exports.productCreate = async (req, res) => {
             description,
             category,
             price,
+            oldprice,
+            percent,
             image: uploadFile.url
         });
         res.status(201).json({ message: "Product Created Successfully", product });
@@ -69,24 +75,24 @@ module.exports.getProduct = async (req, res) => {
     res.status(200).json({ message: "All Products", products });
 }
 
-module.exports.getProductById = async (req, res)=>{
+module.exports.getProductById = async (req, res) => {
     try {
-        const {id} = req.params;
-    if(!mongoose.Types.ObjectId.isValid(id)){
-        return res.status(400).json({message : "Invalid Product ID Format"});
-    }
-    const products = await productModel.findById(id);
+        const { id } = req.params;
+        if (!mongoose.Types.ObjectId.isValid(id)) {
+            return res.status(400).json({ message: "Invalid Product ID Format" });
+        }
+        const products = await productModel.findById(id);
 
-    if(!products){
-        return res.status(400).json({message : "Product Not Found!"})
-    }
-    res.status(200).json(products);
+        if (!products) {
+            return res.status(400).json({ message: "Product Not Found!" })
+        }
+        res.status(200).json(products);
     } catch (error) {
-        res.status(500).json({message : "Server Error", error: error.message});
+        res.status(500).json({ message: "Server Error", error: error.message });
     }
 }
 
-module.exports.logout = async (req, res)=>{
-    req.clearCookie("token");
-    res.status(200).json({message:"Logged Out Succesfully"});
+module.exports.logout = async (req, res) => {
+    res.clearCookie("token");
+    res.status(200).json({ message: "Logged Out Succesfully" });
 }
