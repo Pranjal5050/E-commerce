@@ -3,6 +3,7 @@ import { RiDiscountPercentLine, RiHeart2Line, RiHome2Line, RiMapPinLine, RiSearc
 import { Link } from 'react-router-dom'
 import BottomNavbar from './BottomNavbar'
 import { useCart } from './CartContext.jsx';
+import Search from './Search.jsx';
 
 const Navbar = () => {
     const { product } = useCart();
@@ -27,11 +28,11 @@ const Navbar = () => {
                 </div>
 
                 <div className='md:flex gap-5 items-center hidden'>
-                    <div className='relative'>
-                        {/* {search} */}
-                        <input type="search" placeholder='Search a products..' className='text-sm border border-gray-300 outline-none px-2 py-2 rounded-full' />
-                        <RiSearch2Line size={18} className='absolute top-2 right-2 text-gray-700' />
-                    </div>
+
+
+                    <Search/>
+
+
                     <Link to={'/account'}><RiUserLine size={21} /></Link>
                     <RiHeart2Line size={21} />
                     <div>
@@ -41,6 +42,8 @@ const Navbar = () => {
                         </span>
                     </div>
                 </div>
+
+                
 
 
 

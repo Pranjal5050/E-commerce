@@ -22,4 +22,6 @@ router.get("/logout", userController.Logout);
 
 router.get("/randomproduct", userController.randomProducts);
 
+router.get("/searchproduct", userController.searchProducts);
+
 module.exports = router
