@@ -50,7 +50,7 @@ const Navbar = () => {
                 {/* Mobile View */}
                 <div className='md:hidden flex items-center gap-5'>
                     <div className='flex gap-5'>
-                        <Link to={'/cart'}>
+                        <Link to={'/search'}>
                             <RiSearch2Line className='text-2xl' size={20} />
                         </Link>
 
