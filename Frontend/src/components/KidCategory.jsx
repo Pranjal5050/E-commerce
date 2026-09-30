@@ -7,74 +7,71 @@ import { addToCart } from "../services/cartService";
 import { toast, ToastContainer } from "react-toastify";
 import { UseCartStatus } from "../services/UseCartStatus";
 
-
 import { useCart } from "./CartContext";
 
-
 const KidCategory = () => {
-    const { fetchProduct } = useCart();
-    const { cartItem, setCartItem } = UseCartStatus();
-    const navigate = useNavigate();
-    const [product, setProduct] = useState([]);
+  const { fetchProduct } = useCart();
+  const { cartItem, setCartItem } = UseCartStatus();
+  const navigate = useNavigate();
+  const [product, setProduct] = useState([]);
 
-    useEffect(() => {
-        async function fetchProduct() {
-            try {
-                const res = await axios.get(`${import.meta.env.VITE_API_ENDPOINT}/admin/getProducts`);
+  useEffect(() => {
+    async function fetchProduct() {
+      try {
+        const res = await axios.get(
+          `${import.meta.env.VITE_API_ENDPOINT}/admin/getProducts`,
+        );
 
-                const kidproducts = res.data.products.filter((prod) => {
-                    return prod.category.toLowerCase() === "kids";
-                });
-                setProduct(kidproducts);
-
-            } catch (error) {
-                toast.error("Server Error");
-            }
-        }
-        fetchProduct()
-    }, [])
-
-    const handleAddToCart = async (productId) => {
-        try {
-            if (cartItem[productId]) {
-                navigate('/cart')
-                return
-            }
-            await addToCart(productId);
-
-            setCartItem((prev) => ({
-                ...prev,
-                [productId]: true
-            }))
-            fetchProduct()
-        } catch (error) {
-            toast.error("Error", error)
-        }
+        const kidproducts = res.data.products.filter((prod) => {
+          return prod.category.toLowerCase() === "kids";
+        });
+        setProduct(kidproducts);
+      } catch (error) {
+        toast.error("Server Error");
+      }
     }
+    fetchProduct();
+  }, []);
 
-    return (
-        <div className="min-h-screen w-full bg-[#fafafa]">
-            <ToastContainer />
-            {/* Navbar */}
-            <Navbar />
+  const handleAddToCart = async (productId) => {
+    try {
+      if (cartItem[productId]) {
+        navigate("/cart");
+        return;
+      }
+      await addToCart(productId);
 
-            {/* Main Content */}
-            <main className="w-full">
+      setCartItem((prev) => ({
+        ...prev,
+        [productId]: true,
+      }));
+      fetchProduct();
+    } catch (error) {
+      toast.error("Error", error);
+    }
+  };
 
-                {/* Category Header */}
-                <div className="mx-auto w-full max-w-[1600px] px-4 py-6 sm:px-6 md:px-8 lg:px-10 lg:py-8">
+  return (
+    <div className="min-h-screen w-full bg-[#fafafa]">
+      <ToastContainer />
+      {/* Navbar */}
+      <Navbar />
 
-                    <h1 className="text-2xl font-semibold tracking-tight text-green-900 sm:text-3xl">
-                        Shoes
-                    </h1>
+      {/* Main Content */}
+      <main className="w-full">
+        {/* Category Header */}
+        <div className="mx-auto w-full max-w-[1600px] px-4 py-6 sm:px-6 md:px-8 lg:px-10 lg:py-8">
+          <h1 className="text-2xl font-semibold tracking-tight text-green-900 sm:text-3xl">
+            kid's
+          </h1>
 
-                    <p className="mt-1.5 text-xs text-gray-500 sm:mt-2 sm:text-sm">
-                        Discover our best collection for Shoes
-                    </p>
+          <p className="mt-1.5 text-xs text-gray-500 sm:mt-2 sm:text-sm">
+            Discover our best collection for Shoes
+          </p>
 
-                    {/* Products Grid */}
-                    <div
-                        className="
+          {/* Products Grid */}
+          <div
+            className="
               mt-6 grid w-full
               grid-cols-2
               gap-x-3 gap-y-5
@@ -92,12 +89,11 @@ const KidCategory = () => {
 
               2xl:grid-cols-6
             "
-                    >
-
-                        {product.map((item) => (
-                            <div
-                                key={item._id}
-                                className="
+          >
+            {product.map((item) => (
+              <div
+                key={item._id}
+                className="
                   group min-w-0
                   overflow-hidden
                   rounded-xl
@@ -110,23 +106,22 @@ const KidCategory = () => {
                   hover:border-gray-300
                   hover:shadow-lg
                 "
-                            >
-
-                                {/* Product Image */}
-                                <Link to={`/productDetails/${item._id}`}>
-                                    <div
-                                        className="
+              >
+                {/* Product Image */}
+                <Link to={`/productDetails/${item._id}`}>
+                  <div
+                    className="
                       relative
                       aspect-[4/4.5]
                       w-full
                       overflow-hidden
                       bg-gray-100
                     "
-                                    >
-                                        <img
-                                            src={item.image}
-                                            alt={item.title}
-                                            className="
+                  >
+                    <img
+                      src={item.image}
+                      alt={item.title}
+                      className="
                         h-full
                         w-full
                         object-cover
@@ -135,11 +130,11 @@ const KidCategory = () => {
                         duration-500
                         group-hover:scale-105
                       "
-                                        />
+                    />
 
-                                        {/* NEW Badge */}
-                                        <span
-                                            className="
+                    {/* NEW Badge */}
+                    <span
+                      className="
                         absolute
                         left-2
                         top-2
@@ -156,14 +151,14 @@ const KidCategory = () => {
                         sm:top-3
                         sm:text-[9px]
                       "
-                                        >
-                                            New
-                                        </span>
+                    >
+                      New
+                    </span>
 
-                                        {/* Wishlist */}
-                                        <button
-                                            onClick={(e) => e.preventDefault()}
-                                            className="
+                    {/* Wishlist */}
+                    <button
+                      onClick={(e) => e.preventDefault()}
+                      className="
                         absolute
                         right-2
                         top-2
@@ -185,21 +180,18 @@ const KidCategory = () => {
                         sm:h-8
                         sm:w-8
                       "
-                                        >
-                                            <span className="text-base leading-none">
-                                                ♡
-                                            </span>
-                                        </button>
-                                    </div>
-                                </Link>
+                    >
+                      <span className="text-base leading-none">♡</span>
+                    </button>
+                  </div>
+                </Link>
 
-                                {/* Product Information */}
-                                <div className="p-2.5 sm:p-3.5">
-
-                                    {/* Title */}
-                                    <Link to={`/productDetails/${item._id}`}>
-                                        <h2
-                                            className="
+                {/* Product Information */}
+                <div className="p-2.5 sm:p-3.5">
+                  {/* Title */}
+                  <Link to={`/productDetails/${item._id}`}>
+                    <h2
+                      className="
                         line-clamp-2
                         min-h-[32px]
                         text-[11px]
@@ -212,48 +204,48 @@ const KidCategory = () => {
                         sm:text-sm
                         sm:leading-5
                       "
-                                        >
-                                            {item.title}
-                                        </h2>
-                                    </Link>
+                    >
+                      {item.title}
+                    </h2>
+                  </Link>
 
-                                    {/* Rating */}
-                                    <div className="mt-1.5 flex items-center gap-1">
-                                        <span className="text-[11px] text-yellow-500 sm:text-xs">
-                                            ★
-                                        </span>
+                  {/* Rating */}
+                  <div className="mt-1.5 flex items-center gap-1">
+                    <span className="text-[11px] text-yellow-500 sm:text-xs">
+                      ★
+                    </span>
 
-                                        <span className="text-[10px] font-medium text-gray-600 sm:text-xs">
-                                            4.5
-                                        </span>
+                    <span className="text-[10px] font-medium text-gray-600 sm:text-xs">
+                      4.5
+                    </span>
 
-                                        <span className="text-[9px] text-gray-400 sm:text-[11px]">
-                                            (120)
-                                        </span>
-                                    </div>
+                    <span className="text-[9px] text-gray-400 sm:text-[11px]">
+                      (120)
+                    </span>
+                  </div>
 
-                                    {/* Price */}
-                                    <div className="mt-1.5 flex items-center gap-1.5">
-                                        <span className="text-sm font-bold text-gray-900 sm:text-base">
-                                            ₹{item.price}
-                                        </span>
+                  {/* Price */}
+                  <div className="mt-1.5 flex items-center gap-1.5">
+                    <span className="text-sm font-bold text-gray-900 sm:text-base">
+                      ₹{item.price}
+                    </span>
 
-                                        {/* Optional old price */}
-                                        {item.oldPrice && (
-                                            <span className="text-[9px] text-gray-400 line-through sm:text-xs">
-                                                ₹{item.oldPrice}
-                                            </span>
-                                        )}
+                    {/* Optional old price */}
+                    {item.oldPrice && (
+                      <span className="text-[9px] text-gray-400 line-through sm:text-xs">
+                        ₹{item.oldPrice}
+                      </span>
+                    )}
 
-                                        <span className="text-[9px] md:text-[13px] text-green-600 font-bold sm:text-xs">
-                                            ₹{item.percent}% OFF
-                                        </span>
-                                    </div>
+                    <span className="text-[9px] md:text-[13px] text-green-600 font-bold sm:text-xs">
+                      ₹{item.percent}% OFF
+                    </span>
+                  </div>
 
-                                    {/* Add To Cart */}
-                                    <button
-                                        onClick={() => handleAddToCart(item._id)}
-                                        className="
+                  {/* Add To Cart */}
+                  <button
+                    onClick={() => handleAddToCart(item._id)}
+                    className="
                       mt-2.5
                       flex
                       w-full
@@ -281,24 +273,23 @@ const KidCategory = () => {
                       sm:text-xs
                       cursor-pointer
                     "
-                                    >
-                                        <RiShoppingBasketFill
-                                            size={14}
-                                            className="sm:h-4 sm:w-4"
-                                        />
+                  >
+                    <RiShoppingBasketFill size={14} className="sm:h-4 sm:w-4" />
 
-                                        <span>{cartItem[item._id || item.id] ? "Go to Cart" : "Add to Cart"}</span>
-                                    </button>
-
-                                </div>
-                            </div>
-                        ))}
-
-                    </div>
+                    <span>
+                      {cartItem[item._id || item.id]
+                        ? "Go to Cart"
+                        : "Add to Cart"}
+                    </span>
+                  </button>
                 </div>
-            </main>
+              </div>
+            ))}
+          </div>
         </div>
-    )
-}
+      </main>
+    </div>
+  );
+};
 
-export default KidCategory
+export default KidCategory;

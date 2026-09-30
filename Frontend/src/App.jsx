@@ -1,19 +1,19 @@
-import React from 'react'
-import Home from './pages/Home'
-import { Routes, Route } from 'react-router-dom'
-import Search from './components/Search'
-import UserAccount from './components/UserAccount'
-import WomenCategory from './components/WomenCategory'
-import ProductDeatils from './components/ProductDeatils'
-import UserRegister from './components/UserRegister'
-import UserLogin from './components/UserLogin'
-import Cart from './components/Cart'
-import AdminLogin from './pages/AdminLogin'
-import AdminPage from './pages/AdminPage'
-import MenCategory from './components/MenCategory'
-import KidCategory from './components/KidCategory'
-import ShoesCategory from './pages/ShoesCategory'
-import SunglassCategory from './pages/SunglassCategory'
+import React from "react";
+import Home from "./pages/Home";
+import { Routes, Route } from "react-router-dom";
+import Search from "./components/Search";
+import UserAccount from "./components/UserAccount";
+import WomenCategory from "./components/WomenCategory";
+import ProductDeatils from "./components/ProductDeatils";
+import UserRegister from "./components/UserRegister";
+import UserLogin from "./components/UserLogin";
+import Cart from "./components/Cart";
+import AdminLogin from "./pages/AdminLogin";
+import AdminPage from "./pages/AdminPage";
+import MenCategory from "./components/MenCategory";
+import KidCategory from "./components/KidCategory";
+import ShoesCategory from "./pages/ShoesCategory";
+import SunglassCategory from "./pages/SunglassCategory";
 
 const App = () => {
   return (
@@ -28,15 +28,14 @@ const App = () => {
         <Route path="/productDetails/:id" element={<ProductDeatils />}></Route>
         <Route path="/cart" element={<Cart />}></Route>
         <Route path="/admin/login" element={<AdminLogin />}></Route>
-        <Route path="/admin" element={<AdminPage/>}></Route>
-        <Route path='/category/men' element={<MenCategory/>}></Route>
-        <Route path='/category/kids' element={<KidCategory/>}></Route>
-        <Route path='/category/shoes' element={<ShoesCategory/>}></Route>
-        <Route path='/category/sunglass' element={<SunglassCategory/>}></Route>
+        <Route path="/admin" element={<AdminPage />}></Route>
+        <Route path="/category/men" element={<MenCategory />}></Route>
+        <Route path="/category/kids" element={<KidCategory />}></Route>
+        <Route path="/category/shoes" element={<ShoesCategory />}></Route>
+        <Route path="/category/sunglass" element={<SunglassCategory />}></Route>
       </Routes>
     </div>
-  )
-}
+  );
+};
 
-export default App
-
+export default App;

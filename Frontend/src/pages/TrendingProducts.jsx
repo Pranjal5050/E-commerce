@@ -1,57 +1,61 @@
-import { RiShoppingBasketFill } from '@remixicon/react'
-import React from 'react'
-import { Link, useNavigate } from 'react-router-dom'
-import axios from 'axios'
-import { useEffect } from 'react'
-import { useState } from 'react'
-import { addToCart } from '../services/cartService'
-import {toast, ToastContainer } from 'react-toastify'
-import { UseCartStatus } from '../services/UseCartStatus'
-import { useCart } from '../components/CartContext'
+import { RiShoppingBasketFill } from "@remixicon/react";
+import React from "react";
+import { Link, useNavigate } from "react-router-dom";
+import axios from "axios";
+import { useEffect } from "react";
+import { useState } from "react";
+import { addToCart } from "../services/cartService";
+import { toast, ToastContainer } from "react-toastify";
+import { UseCartStatus } from "../services/UseCartStatus";
+import { useCart } from "../components/CartContext";
 
 const TrendingProducts = () => {
-  const {fetchProduct} = useCart();
-  const {cartItem, setCartItem} = UseCartStatus();
+  const { fetchProduct } = useCart();
+  const { cartItem, setCartItem } = UseCartStatus();
   const navigate = useNavigate();
 
   const [products, setProduct] = useState([]);
 
   useEffect(() => {
     const getProducts = async () => {
-      const response = await axios.get(`${import.meta.env.VITE_API_ENDPOINT}/user/randomproduct`);
+      const response = await axios.get(
+        `${import.meta.env.VITE_API_ENDPOINT}/user/randomproduct`,
+      );
       setProduct(response.data.products);
-    }
+    };
     getProducts();
   }, []);
 
-  const handleCart = async (productId)=>{
+  const handleCart = async (productId) => {
     try {
-      if(cartItem[productId]){
-        navigate("/cart")
+      if (cartItem[productId]) {
+        navigate("/cart");
         return;
       }
       await addToCart(productId);
 
-      setCartItem((prev)=>({
-        ...prev, [productId] : true
+      setCartItem((prev) => ({
+        ...prev,
+        [productId]: true,
       }));
 
       fetchProduct();
-
     } catch (error) {
       toast.error("Server Error");
     }
-  }
+  };
 
   return (
-    <div className='p-5'>
-      <ToastContainer/>
-      <div className='flex item-center justify-between'>
+    <div className="p-5">
+      <ToastContainer />
+      <div className="flex item-center justify-between">
         <div>
-          <h1 className='md:text-2xl font-semibold'>Trending Products</h1>
-          <p className='text-sm'>Most loved style, just for you.</p>
+          <h1 className="md:text-2xl font-semibold">Trending Products</h1>
+          <p className="text-sm">Most loved style, just for you.</p>
         </div>
-        <Link to={'/view_all'} className='text-green-800 text-sm font-semibold'>View All <hr /></Link>
+        <Link to={"/view_all"} className="text-green-800 text-sm font-semibold">
+          View All <hr />
+        </Link>
       </div>
 
       {/* Products Grid */}
@@ -75,11 +79,11 @@ const TrendingProducts = () => {
               2xl:grid-cols-6
             "
       >
-
-        {products.map((item, index)=>{
-         return <div key={index} className={index === 5 ? "md:hidden" : ""}>
-         <div
-          className="
+        {products.map((item, index) => {
+          return (
+            <div key={index} className={index === 5 ? "md:hidden" : ""}>
+              <div
+                className="
                   group 
                   min-w-0
                   overflow-hidden
@@ -94,23 +98,22 @@ const TrendingProducts = () => {
                   hover:border-gray-300
                   hover:shadow-lg
                 "
-        >
-
-          {/* Product Image */}
-          <Link to={`/productDetails/${item._id}`}>
-            <div
-              className="
+              >
+                {/* Product Image */}
+                <Link to={`/productDetails/${item._id}`}>
+                  <div
+                    className="
                       relative
                       aspect-[4/3.5]
                       w-full
                       overflow-hidden
                       bg-gray-100
                     "
-            >
-              <img
-                src={item.image}
-                alt={item.title}
-                className="
+                  >
+                    <img
+                      src={item.image}
+                      alt={item.title}
+                      className="
                         h-full
                         w-full
                         object-cover
@@ -119,11 +122,11 @@ const TrendingProducts = () => {
                         duration-500
                         group-hover:scale-105
                       "
-              />
+                    />
 
-              {/* NEW Badge */}
-              <span
-                className="
+                    {/* NEW Badge */}
+                    <span
+                      className="
                         absolute
                         left-2
                         top-2
@@ -140,13 +143,13 @@ const TrendingProducts = () => {
                         sm:top-3
                         sm:text-[9px]
                       "
-              >
-                New
-              </span>
+                    >
+                      New
+                    </span>
 
-              {/* Wishlist */}
-              <button
-                className="
+                    {/* Wishlist */}
+                    <button
+                      className="
                         absolute
                         right-2
                         top-2
@@ -168,21 +171,18 @@ const TrendingProducts = () => {
                         sm:h-8
                         sm:w-8
                       "
-              >
-                <span className="text-base leading-none">
-                  ♡
-                </span>
-              </button>
-            </div>
-          </Link>
+                    >
+                      <span className="text-base leading-none">♡</span>
+                    </button>
+                  </div>
+                </Link>
 
-          {/* Product Information */}
-          <div className="p-2.5 sm:p-3.5">
-
-            {/* Title */}
-            <Link>
-              <h2
-                className="
+                {/* Product Information */}
+                <div className="p-2.5 sm:p-3.5">
+                  {/* Title */}
+                  <Link>
+                    <h2
+                      className="
                         line-clamp-2
                         min-h-[32px]
                         text-[11px]
@@ -196,58 +196,59 @@ const TrendingProducts = () => {
                         sm:text-sm
                         sm:leading-5
                       "
-              >
-                {item.title}
-              </h2>
-            </Link>
+                    >
+                      {item.title}
+                    </h2>
+                  </Link>
 
-            {/* Rating */}
-            <div className="mt-1.5 flex items-center gap-1">
-              <span className="text-[11px] text-yellow-500 sm:text-xs">
-                ★
-              </span>
+                  {/* Rating */}
+                  <div className="mt-1.5 flex items-center gap-1">
+                    <span className="text-[11px] text-yellow-500 sm:text-xs">
+                      ★
+                    </span>
 
-              <span className="text-[11px] text-yellow-500 sm:text-xs">
-                ★
-              </span>
+                    <span className="text-[11px] text-yellow-500 sm:text-xs">
+                      ★
+                    </span>
 
-              <span className="text-[11px] text-yellow-500 sm:text-xs">
-                ★
-              </span>
+                    <span className="text-[11px] text-yellow-500 sm:text-xs">
+                      ★
+                    </span>
 
-              <span className="text-[11px] text-yellow-500 sm:text-xs">
-                ★
-              </span>
+                    <span className="text-[11px] text-yellow-500 sm:text-xs">
+                      ★
+                    </span>
 
-              <span className="text-[10px] font-medium text-gray-600 sm:text-xs">
-                4.5
-              </span>
+                    <span className="text-[10px] font-medium text-gray-600 sm:text-xs">
+                      4.5
+                    </span>
 
-              <span className="text-[9px] text-gray-400 sm:text-[11px]">
-                (120)
-              </span>
-            </div>
+                    <span className="text-[9px] text-gray-400 sm:text-[11px]">
+                      (120)
+                    </span>
+                  </div>
 
-            {/* Price */}
-            <div className="mt-1.5 flex items-center gap-1.5">
-              <span className="text-md font-bold text-gray-900 sm:text-base">
-                ₹{item.price}
-              </span>
+                  {/* Price */}
+                  <div className="mt-1.5 flex items-center gap-1.5">
+                    <span className="text-md font-bold text-gray-900 sm:text-base">
+                      ₹{item.price}
+                    </span>
 
-              <span className="text-[9px] text-gray-400 line-through sm:text-xs">
-                ₹{item.oldPrice}
-              </span>
+                    <span className="text-[9px] text-gray-400 line-through sm:text-xs">
+                      ₹{item.oldPrice}
+                    </span>
 
-              <span className="text-[9px] md:text-[13px] text-green-600 font-bold sm:text-xs">
-                ₹{item.percent}% OFF
-              </span>
+                    <span className="text-[9px] md:text-[13px] text-green-600 font-bold sm:text-xs">
+                      ₹{item.percent}% OFF
+                    </span>
+                  </div>
 
-            </div>
-
-            {/* Add To Cart */}
-            <button 
-            onClick={()=>{handleCart(item._id || item.id)}}
-              className="
+                  {/* Add To Cart */}
+                  <button
+                    onClick={() => {
+                      handleCart(item._id || item.id);
+                    }}
+                    className="
                       mt-2.5
                       flex
                       w-full
@@ -275,56 +276,23 @@ const TrendingProducts = () => {
                       sm:text-xs
                       cursor-pointer
                     "
-            >
-              <RiShoppingBasketFill
-                size={14}
-                className="sm:h-4 sm:w-4"
-              />
+                  >
+                    <RiShoppingBasketFill size={14} className="sm:h-4 sm:w-4" />
 
-              <span>{cartItem[item._id || item.id] ? "Go to Cart" : "Add to cart"}</span>
-            </button>
-
-          </div>
-        </div>
-</div>
-
-
-
-
-
-
-
-
-
-
+                    <span>
+                      {cartItem[item._id || item.id]
+                        ? "Go to Cart"
+                        : "Add to cart"}
+                    </span>
+                  </button>
+                </div>
+              </div>
+            </div>
+          );
         })}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
       </div>
-
-
-
-
     </div>
-  )
-}
+  );
+};
 
-export default TrendingProducts
+export default TrendingProducts;

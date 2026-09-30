@@ -1,9 +1,4 @@
-import React, {
-    createContext,
-    useContext,
-    useEffect,
-    useState
-} from "react";
+import React, { createContext, useContext, useEffect, useState } from "react";
 
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
@@ -11,54 +6,48 @@ import { useNavigate } from "react-router-dom";
 const CartContext = createContext();
 
 export const CartProvider = ({ children }) => {
+  const [product, setProduct] = useState([]);
 
-    const [product, setProduct] = useState([]);
+  const navigate = useNavigate();
 
-    const navigate = useNavigate();
+  const fetchProduct = async () => {
+    try {
+      const token = localStorage.getItem("token");
 
-    const fetchProduct = async () => {
+      if (!token) {
+        return;
+      }
 
-        try {
+      const res = await axios.get(
+        `${import.meta.env.VITE_API_ENDPOINT}/cart/getCartProduct`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        },
+      );
 
-            const token = localStorage.getItem("token");
+      setProduct(res.data.cartProduct);
+    } catch (error) {
+      console.log("Cart Error:", error);
+    }
+  };
 
-            if (!token) {
-                return;
-            }
+  useEffect(() => {
+    fetchProduct();
+  }, []);
 
-            const res = await axios.get(
-                `${import.meta.env.VITE_API_ENDPOINT}/cart/getCartProduct`,
-                {
-                    headers: {
-                        Authorization: `Bearer ${token}`
-                    }
-                }
-            );
-
-                setProduct(res.data.cartProduct);
-
-        } catch (error) {
-
-            console.log("Cart Error:", error);
-
-        }
-    };
-
-    useEffect(() => {
-        fetchProduct();
-    }, []);
-
-    return (
-        <CartContext.Provider
-            value={{
-                product,
-                setProduct,
-                fetchProduct
-            }}
-        >
-            {children}
-        </CartContext.Provider>
-    );
+  return (
+    <CartContext.Provider
+      value={{
+        product,
+        setProduct,
+        fetchProduct,
+      }}
+    >
+      {children}
+    </CartContext.Provider>
+  );
 };
 
 export const useCart = () => useContext(CartContext);

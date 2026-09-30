@@ -1,13 +1,13 @@
-import React, { useEffect, useState } from 'react'
-import axios from 'axios'
-import Navbar from '../components/Navbar';
-import { RiShoppingBasketFill } from '@remixicon/react';
-import { Link } from 'react-router-dom';
-import { toast, ToastContainer } from 'react-toastify';
-import { useNavigate } from 'react-router-dom';
-import { addToCart } from '../services/cartService';
-import { UseCartStatus } from '../services/UseCartStatus';
-import { useCart } from './CartContext';
+import React, { useEffect, useState } from "react";
+import axios from "axios";
+import Navbar from "../components/Navbar";
+import { RiShoppingBasketFill } from "@remixicon/react";
+import { Link } from "react-router-dom";
+import { toast, ToastContainer } from "react-toastify";
+import { useNavigate } from "react-router-dom";
+import { addToCart } from "../services/cartService";
+import { UseCartStatus } from "../services/UseCartStatus";
+import { useCart } from "./CartContext";
 
 const MenCategory = () => {
   const { fetchProduct } = useCart();
@@ -16,17 +16,16 @@ const MenCategory = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-
     async function getProduct() {
-
       try {
-        const res = await axios.get(`${import.meta.env.VITE_API_ENDPOINT}/admin/getProducts`);
+        const res = await axios.get(
+          `${import.meta.env.VITE_API_ENDPOINT}/admin/getProducts`,
+        );
 
         const menProducts = res.data.products.filter((product) => {
-          return product.category.toLowerCase() === 'men';
+          return product.category.toLowerCase() === "men";
         });
         setProduct(menProducts);
-
       } catch (error) {
         toast.error("Error", error);
       }
@@ -38,25 +37,21 @@ const MenCategory = () => {
     try {
       if (cartItem[productId]) {
         navigate("/cart");
-        return
+        return;
       }
 
-      await addToCart(productId)
+      await addToCart(productId);
 
       setCartItem((prev) => ({
-        ...prev, [productId]: true
+        ...prev,
+        [productId]: true,
       }));
 
       fetchProduct();
-
-
     } catch (error) {
-      toast.error("Server Error")
+      toast.error("Server Error");
     }
-  }
-
-
-
+  };
 
   return (
     <div className="min-h-screen w-full bg-[#fafafa]">
@@ -66,12 +61,10 @@ const MenCategory = () => {
 
       {/* Main Content */}
       <main className="w-full">
-
         {/* Category Header */}
         <div className="mx-auto w-full max-w-[1600px] px-4 py-6 sm:px-6 md:px-8 lg:px-10 lg:py-8">
-
           <h1 className="text-2xl font-semibold tracking-tight text-green-900 sm:text-3xl">
-            Shoes
+            Men
           </h1>
 
           <p className="mt-1.5 text-xs text-gray-500 sm:mt-2 sm:text-sm">
@@ -99,7 +92,6 @@ const MenCategory = () => {
               2xl:grid-cols-6
             "
           >
-
             {product.map((item) => (
               <div
                 key={item._id}
@@ -117,7 +109,6 @@ const MenCategory = () => {
                   hover:shadow-lg
                 "
               >
-
                 {/* Product Image */}
                 <Link to={`/productDetails/${item._id}`}>
                   <div
@@ -192,16 +183,13 @@ const MenCategory = () => {
                         sm:w-8
                       "
                     >
-                      <span className="text-base leading-none">
-                        ♡
-                      </span>
+                      <span className="text-base leading-none">♡</span>
                     </button>
                   </div>
                 </Link>
 
                 {/* Product Information */}
                 <div className="p-2.5 sm:p-3.5">
-
                   {/* Title */}
                   <Link to={`/productDetails/${item._id}`}>
                     <h2
@@ -261,23 +249,22 @@ const MenCategory = () => {
                     onClick={() => handleAddToCart(item._id)}
                     className=" mt-2.5 cursor-pointer flex w-full items-center justify-center gap-1.5 rounded-sm border border-green-800 bg-white px-2 py-1.5 text-[10px] font-medium text-green-900 transition-all duration-200 hover:bg-green-900 hover:text-white active:scale-[0.98] sm:mt-3 sm:gap-2 sm:px-3 sm:py-2 sm:text-xs"
                   >
-                    <RiShoppingBasketFill
-                      size={14}
-                      className="sm:h-4 sm:w-4"
-                    />
+                    <RiShoppingBasketFill size={14} className="sm:h-4 sm:w-4" />
 
-                    <span>{cartItem[item._id || item.id] ? "Go to cart" : "Add to cart"}</span>
+                    <span>
+                      {cartItem[item._id || item.id]
+                        ? "Go to cart"
+                        : "Add to cart"}
+                    </span>
                   </button>
-
                 </div>
               </div>
             ))}
-
           </div>
         </div>
       </main>
     </div>
-  )
-}
+  );
+};
 
-export default MenCategory
+export default MenCategory;

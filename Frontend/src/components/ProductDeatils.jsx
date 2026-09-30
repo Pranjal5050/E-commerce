@@ -15,8 +15,8 @@ import { useNavigate } from "react-router-dom";
 import { useCart } from "./CartContext";
 
 const ProductDeatils = () => {
-  const {cartItem, setCartItem} = UseCartStatus();
-  const {fetchProduct} = useCart()
+  const { cartItem, setCartItem } = UseCartStatus();
+  const { fetchProduct } = useCart();
   const navigate = useNavigate();
   const { id } = useParams();
 
@@ -29,7 +29,7 @@ const ProductDeatils = () => {
     async function getProduct() {
       try {
         const res = await fetch(
-          `${import.meta.env.VITE_API_ENDPOINT}/admin/getProductById/${id}`
+          `${import.meta.env.VITE_API_ENDPOINT}/admin/getProductById/${id}`,
         );
 
         const data = await res.json();
@@ -56,33 +56,30 @@ const ProductDeatils = () => {
           <div className="flex flex-col items-center gap-3">
             <div className="h-8 w-8 animate-spin rounded-full border-2 border-gray-200 border-t-green-700" />
 
-            <p className="text-sm text-gray-500">
-              Loading product...
-            </p>
+            <p className="text-sm text-gray-500">Loading product...</p>
           </div>
         </div>
       </div>
     );
   }
 
-  async function handleAddtoCart(productId){
-     try {
-      if(cartItem[productId]){
-        navigate('/cart')
+  async function handleAddtoCart(productId) {
+    try {
+      if (cartItem[productId]) {
+        navigate("/cart");
         return;
       }
       await addToCart(productId);
 
-      setCartItem((prev)=>({
-        ...prev, [productId] : true
-      }))
+      setCartItem((prev) => ({
+        ...prev,
+        [productId]: true,
+      }));
 
       fetchProduct();
-
-
-     } catch (error) {
+    } catch (error) {
       toast.error("Server Error");
-     }
+    }
   }
 
   if (!product) {
@@ -107,18 +104,15 @@ const ProductDeatils = () => {
 
   return (
     <div className="min-h-screen w-full bg-[#fafafa] mb-20 md:mb-0">
-        <ToastContainer/>
+      <ToastContainer />
       <Navbar />
 
       {/* Main */}
       <main className="mx-auto w-full max-w-[1400px] px-4 py-5 sm:px-6 sm:py-8 lg:px-10 lg:py-10">
-
         {/* Product Layout */}
         <div className="grid w-full grid-cols-1 gap-7 lg:grid-cols-2 lg:gap-12">
-
           {/* ================= IMAGE SECTION ================= */}
           <div className="w-full">
-
             {/* Main Image */}
             <div
               className="
@@ -179,7 +173,6 @@ const ProductDeatils = () => {
 
             {/* Thumbnails */}
             <div className="mt-4 flex gap-2.5 overflow-x-auto pb-1">
-
               {[1, 2, 3, 4].map((_, index) => (
                 <button
                   key={index}
@@ -209,13 +202,11 @@ const ProductDeatils = () => {
                   />
                 </button>
               ))}
-
             </div>
           </div>
 
           {/* ================= PRODUCT DETAILS ================= */}
           <div className="flex w-full flex-col">
-
             {/* Category */}
             <p className="text-xs font-medium uppercase tracking-wider text-green-700">
               {product.category || "Product"}
@@ -238,42 +229,21 @@ const ProductDeatils = () => {
 
             {/* Rating */}
             <div className="mt-4 flex flex-wrap items-center gap-2">
-
               <div className="flex items-center">
-                <RiStarFill
-                  size={19}
-                  className="text-yellow-400"
-                />
+                <RiStarFill size={19} className="text-yellow-400" />
 
-                <RiStarFill
-                  size={19}
-                  className="text-yellow-400"
-                />
+                <RiStarFill size={19} className="text-yellow-400" />
 
-                <RiStarFill
-                  size={19}
-                  className="text-yellow-400"
-                />
+                <RiStarFill size={19} className="text-yellow-400" />
 
-                <RiStarFill
-                  size={19}
-                  className="text-yellow-400"
-                />
+                <RiStarFill size={19} className="text-yellow-400" />
 
-                <RiStarHalfFill
-                  size={19}
-                  className="text-yellow-400"
-                />
+                <RiStarHalfFill size={19} className="text-yellow-400" />
               </div>
 
-              <span className="text-sm font-medium text-gray-700">
-                4.5
-              </span>
+              <span className="text-sm font-medium text-gray-700">4.5</span>
 
-              <span className="text-sm text-gray-400">
-                (128 reviews)
-              </span>
-
+              <span className="text-sm text-gray-400">(128 reviews)</span>
             </div>
 
             {/* Divider */}
@@ -281,7 +251,6 @@ const ProductDeatils = () => {
 
             {/* Price */}
             <div className="flex items-end gap-3">
-
               <span className="text-3xl font-bold text-gray-900 sm:text-4xl">
                 ₹{product.price}
               </span>
@@ -297,7 +266,6 @@ const ProductDeatils = () => {
                   {product.percent}% OFF
                 </span>
               )}
-
             </div>
 
             {/* Description */}
@@ -321,11 +289,12 @@ const ProductDeatils = () => {
               </p>
             </div>
 
-
             {/* Buttons */}
             <div className="mt-7 grid grid-cols-1 gap-3 sm:grid-cols-2">
-
-              <button onClick={(()=>{handleAddtoCart(product._id || product.id)})}
+              <button
+                onClick={() => {
+                  handleAddtoCart(product._id || product.id);
+                }}
                 className="
                   flex
                   h-12
@@ -347,7 +316,9 @@ const ProductDeatils = () => {
                 "
               >
                 <RiShoppingBasketLine size={19} />
-               {cartItem[product._id || product.id] ? "Go to Cart" : "Add to cart"}
+                {cartItem[product._id || product.id]
+                  ? "Go to Cart"
+                  : "Add to cart"}
               </button>
 
               <button
@@ -370,12 +341,10 @@ const ProductDeatils = () => {
               >
                 Buy Now
               </button>
-
             </div>
 
             {/* Extra Info */}
             <div className="mt-7 grid grid-cols-1 gap-3 sm:grid-cols-3">
-
               <div className="rounded-lg border border-gray-200 bg-white p-3">
                 <p className="text-xs font-semibold text-gray-800">
                   🚚 Fast Delivery
@@ -405,9 +374,7 @@ const ProductDeatils = () => {
                   100% secure checkout
                 </p>
               </div>
-
             </div>
-
           </div>
         </div>
       </main>

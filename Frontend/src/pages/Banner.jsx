@@ -1,4 +1,4 @@
-import React from 'react'
+import React from "react";
 
 const Banner = () => {
   return (
@@ -157,7 +157,6 @@ const Banner = () => {
             "
           >
             Shop New Collection
-
             <i
               className="
                 ri-arrow-right-line
@@ -251,7 +250,7 @@ const Banner = () => {
         </div>
       </div>
     </section>
-  )
-}
+  );
+};
 
-export default Banner
+export default Banner;

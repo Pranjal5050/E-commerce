@@ -28,10 +28,7 @@ const Navbar = () => {
                 </div>
 
                 <div className='md:flex gap-5 items-center hidden'>
-
-
                     <Search/>
-
 
                     <Link to={'/account'}><RiUserLine size={21} /></Link>
                     <RiHeart2Line size={21} />
@@ -42,10 +39,6 @@ const Navbar = () => {
                         </span>
                     </div>
                 </div>
-
-                
-
-
 
                 {/* Mobile View */}
                 <div className='md:hidden flex items-center gap-5'>

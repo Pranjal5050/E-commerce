@@ -1,22 +1,24 @@
-import React from 'react'
-import Navbar from '../components/Navbar'
-import SliderBar from '../components/SliderBar'
-import Categories from '../components/Categories'
-import TrendingProducts from './TrendingProducts'
-import Banner from './Banner'
+import React from "react";
+import Navbar from "../components/Navbar";
+import SliderBar from "../components/SliderBar";
+import Categories from "../components/Categories";
+import TrendingProducts from "./TrendingProducts";
+import Banner from "./Banner";
+import Footer from "./Footer";
 
 const Home = () => {
   return (
-    <div className='w-full h-screen bg-[#ffff]'>
+    <div className="w-full h-screen bg-[#ffff]">
       <Navbar />
       <SliderBar />
-      <div className='md:w-[95%] py-2 md:mx-auto'>
+      <div className="md:w-[95%] py-2 md:mx-auto">
         <Categories />
         <TrendingProducts />
-        <Banner/>
+        <Banner />
+        <Footer />
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default Home
+export default Home;
